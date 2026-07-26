@@ -6,13 +6,13 @@ run from `~/command-center`.
 ---
 
 ```
-Continue building Command Center. Repo: ~/command-center. Read PHASES.md for the
-roadmap, HANDOFF.md for where we stopped, and CONNECTORS.md for what each data
-source actually returns.
+Continue with Command Center. Repo: ~/command-center. Read PHASES.md for the
+roadmap, HANDOFF.md for where we stopped, CONNECTORS.md for what each data source
+actually returns.
 
-Phase 0 and Phase 1 are built. Two things are waiting on me — read
-PROJECT_LIST_PROPOSAL.md and tell me what's wrong with the project list, then
-pick up at Phase 2.
+All five phases are built and tested (127 tests). Two approval gates are open and
+waiting on me: PROJECT_LIST_PROPOSAL.md and PROPOSED_STRUCTURE.md. Walk me through
+the project list first.
 ```
 
 ---
@@ -23,9 +23,11 @@ pick up at Phase 2.
 |---|---|
 | 0 — Light recon | ✅ built · **waiting on your sign-off** |
 | 1 — Dashboard | ✅ built and rendering |
-| 2 — Email triage | not started |
-| 3 — Queue, push, schedule | not started |
-| 4 — File reorganization | not started (optional per PHASES.md) |
+| 2 — Email triage | ✅ built · validated against your real inbox |
+| 3 — Queue, push, schedule | ✅ built · notification channel live-tested |
+| 4 — File audit | ✅ audit run · **taxonomy waiting on your approval** |
+
+127 tests, all passing: `python3 .claude/lib/tests/run_all.py`
 
 ## What's blocking
 
@@ -43,38 +45,61 @@ Three questions in it that I can't answer for you:
 - Are `~/alivio-search-partners` and `~/orchids-aliviosearch-com` separate projects,
   or part of Alivio Search Partners? I folded them in.
 
-**2. Two credential actions are yours alone.**
+**2. The taxonomy needs your approval.**
+`PROPOSED_STRUCTURE.md`. Nothing moves until you say so. Three open questions there
+too — which side of the Desktop/Downloads duplication wins, whether `Alex music` is
+yours, and whether `Documents/Codex` is worth keeping.
+
+**3. Two credential actions are yours alone.**
 - WhatsApp is logged out. `cd ~/whatsapp-mcp && npm run login`, then scan the QR.
   Until then nothing can read the RLTRS.co group — which is where the $4,000
   question with Steve has to be answered in writing.
 - Gmail says the account is out of storage and can no longer send or receive.
-  Phase 2 is pointless until that's resolved.
+  Triage runs fine, but against a mailbox that can't receive.
 
 ## What was built
 
 ```
-PHASES.md                        roadmap (yours, unchanged)
+PHASES.md                        roadmap (yours; only the status line was updated)
 PROJECT_LIST_PROPOSAL.md         Phase 0 output — needs your corrections
 CONNECTORS.md                    what each data source actually returns
-.claude/lib/projects.py          the only parser for memory/projects.md
-.claude/lib/feed.py              local state + Calendar; separates "empty" from "unread"
+FILE_AUDIT.md                    Phase 4 measurements, read-only
+PROPOSED_STRUCTURE.md            taxonomy — needs your approval
+DO_NOT_TOUCH.md                  hard exclusions, enforced in filing.py
+
+.claude/lib/projects.py          sole parser for memory/projects.md
+.claude/lib/feed.py              local state + Calendar; "empty" ≠ "couldn't read"
 .claude/lib/build_dashboard.py   assembles dashboard/index.html
-.claude/lib/tests/               19 tests, all passing
-.claude/commands/dashboard.md    /dashboard
-dashboard/template.html          the page; __CC_DATA__ is replaced at build time
+.claude/lib/triage.py            ACT/FYI/NOISE/UNSURE; no send/delete code path
+.claude/lib/queue.py             cap 10, 40% floor, 7d expiry, 30d dedupe
+.claude/lib/push.py              macOS notify + Twilio, 2/week cap, off by default
+.claude/lib/heartbeat.py         stamps state/heartbeat.json
+.claude/lib/audit.py             read-only filesystem audit
+.claude/lib/filing.py            plan/apply; refuses anything plan() didn't approve
+.claude/lib/tests/run_all.py     127 tests
+
+.claude/commands/                dashboard, triage, queue, file,
+                                 morning-brief, evening-digest, weekly-review
+dashboard/template.html          the page; __CC_DATA__ replaced at build time
 dashboard/index.html             generated — do not edit by hand
-state/needs-me.md                append-only, feeds the NEEDS ME section
 ```
 
 ## Running it
 
 ```bash
+python3 .claude/lib/tests/run_all.py                          # 127 tests
 python3 .claude/lib/build_dashboard.py && open dashboard/index.html
-python3 .claude/lib/tests/test_projects.py      # 19 tests
+python3 .claude/lib/heartbeat.py --status
+python3 .claude/lib/audit.py                                  # read-only
 ```
 
-`/dashboard` does the full thing: refreshes connectors into `dashboard/feed.json`,
-rebuilds, opens, stamps the heartbeat.
+Commands: `/dashboard` `/triage` `/queue` `/file` `/morning-brief` `/evening-digest`
+`/weekly-review`
+
+## Schedule (per PHASES.md, not yet installed as cron)
+
+6am weekdays `/morning-brief` · hourly `/triage` · 6pm `/evening-digest` ·
+Sunday 5pm `/weekly-review`. Each stamps the heartbeat on completion.
 
 ## Design rule that governs everything
 
@@ -94,5 +119,9 @@ the calendar was "genuinely empty" in the same breath as saying it was unavailab
 - `~/TASKS.md` doesn't exist. PHASES.md lists it as a data source.
 - Your calendar has 3 real events in 90 days, all holidays. TODAY leans on Linear
   due dates and Granola instead — see CONNECTORS.md.
-- `.claude/lib/heartbeat.py` is referenced by `/dashboard` step 4 but is a Phase 5
-  deliverable and isn't written yet.
+- The four scheduled runs exist as commands but **nothing schedules them yet.** No
+  cron, no launchd. `heartbeat.json` will keep reporting "never run" until either you
+  run them by hand or a scheduler is installed. That's honest, not broken.
+- SMS is unconfigured and off. macOS notifications work — verified live.
+- Triage is in the label-only window and `state/triage-mode.json` has `started: null`,
+  so the 14-day clock starts on the first real `/triage` run.

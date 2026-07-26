@@ -6,7 +6,10 @@ Run in order. Each produces artifacts the next one reads. Do not skip ahead.
 step — sorting Movies doesn't make Joel more effective, and a mistake there is expensive.
 Build the thing that helps, prove it works, then let it touch the drive.
 
-Status: Phase 0 not started. Bootstrap complete (hooks, memory scaffold, CLAUDE.md).
+Status (2026-07-26): Phases 0–4 built and tested. **Two approval gates are open and
+nothing proceeds past them:** the project list in `PROJECT_LIST_PROPOSAL.md` needs
+Joel's corrections before `memory/projects.md` is written, and the taxonomy in
+`PROPOSED_STRUCTURE.md` needs approval before a single file moves. See `HANDOFF.md`.
 
 ---
 

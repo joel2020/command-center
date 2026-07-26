@@ -1,3 +1,7 @@
 state/automation-log.jsonl
 dashboard/*.cache
 .DS_Store
+state/push-config.json
+state/push-log.jsonl
+state/known-senders.json
+dashboard/feed.json

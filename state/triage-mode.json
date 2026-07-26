@@ -1,0 +1,5 @@
+{
+  "_comment": "Label-only window. Archiving requires BOTH the 14-day window to elapse AND archive_enabled:true. Time passing is not consent — Joel flips this flag by hand after reviewing what triage would have archived.",
+  "started": null,
+  "archive_enabled": false
+}

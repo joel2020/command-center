@@ -1,0 +1,1493 @@
+{
+  "generated_at": "2026-07-26T00:10:51.790878-04:00",
+  "roots": [
+    "Desktop",
+    "Downloads",
+    "Documents",
+    "Pictures",
+    "Movies",
+    "Music"
+  ],
+  "file_count": 102262,
+  "total_bytes": 32697885663,
+  "by_folder": {
+    "Pictures/Photos Library.photoslibrary": {
+      "count": 97970,
+      "bytes": 8305050625
+    },
+    "Downloads/Alex music": {
+      "count": 276,
+      "bytes": 4382775236
+    },
+    "Desktop/Alex music": {
+      "count": 274,
+      "bytes": 4382762940
+    },
+    "Downloads": {
+      "count": 39,
+      "bytes": 4270949771
+    },
+    "Downloads/personal": {
+      "count": 196,
+      "bytes": 4264385504
+    },
+    "Desktop/personal": {
+      "count": 195,
+      "bytes": 4264367068
+    },
+    "Desktop": {
+      "count": 21,
+      "bytes": 1423104247
+    },
+    "Documents/Codex": {
+      "count": 1208,
+      "bytes": 456879736
+    },
+    "Documents": {
+      "count": 31,
+      "bytes": 258506972
+    },
+    "Downloads/Alivio": {
+      "count": 496,
+      "bytes": 187146484
+    },
+    "Desktop/Alivio": {
+      "count": 494,
+      "bytes": 187117804
+    },
+    "Documents/Zoom": {
+      "count": 16,
+      "bytes": 167320013
+    },
+    "Documents/Premium-Logo-3D": {
+      "count": 12,
+      "bytes": 78070426
+    },
+    "Downloads/blender-logo-work": {
+      "count": 984,
+      "bytes": 64973640
+    },
+    "Documents/Mac Safe Organization Logs": {
+      "count": 6,
+      "bytes": 1353411
+    },
+    "Downloads/Sales Training": {
+      "count": 7,
+      "bytes": 1339874
+    },
+    "Desktop/Sales Training": {
+      "count": 6,
+      "bytes": 1333726
+    },
+    "Documents/rltrs-vault": {
+      "count": 11,
+      "bytes": 207861
+    },
+    "Music/Music": {
+      "count": 6,
+      "bytes": 89141
+    },
+    "Downloads/claude-code-backup": {
+      "count": 1,
+      "bytes": 50589
+    },
+    "Downloads/claude-code-backup 2": {
+      "count": 1,
+      "bytes": 50589
+    },
+    "Downloads/mcp-1.0.0": {
+      "count": 9,
+      "bytes": 50006
+    },
+    "Pictures": {
+      "count": 1,
+      "bytes": 0
+    },
+    "Movies": {
+      "count": 1,
+      "bytes": 0
+    },
+    "Music": {
+      "count": 1,
+      "bytes": 0
+    }
+  },
+  "largest": [
+    {
+      "path": "/Users/joel/Desktop/2.0. Real Estate Explanation of Investment James Videos & Pricing updated 2.1.pptx",
+      "bytes": 1218969335
+    },
+    {
+      "path": "/Users/joel/Downloads/2.0. Real Estate Explanation of Investment James Videos & Pricing updated 2.1.pptx",
+      "bytes": 1218969335
+    },
+    {
+      "path": "/Users/joel/Desktop/personal/Screen Recording 2022-05-18 at 11.42.06 AM.mov",
+      "bytes": 1210801511
+    },
+    {
+      "path": "/Users/joel/Downloads/personal/Screen Recording 2022-05-18 at 11.42.06 AM.mov",
+      "bytes": 1210801511
+    },
+    {
+      "path": "/Users/joel/Pictures/Photos Library.photoslibrary/database/Photos.sqlite",
+      "bytes": 1159122944
+    },
+    {
+      "path": "/Users/joel/Desktop/personal/colombia - HD 720p.mov",
+      "bytes": 1103369794
+    },
+    {
+      "path": "/Users/joel/Downloads/personal/colombia - HD 720p.mov",
+      "bytes": 1103369794
+    },
+    {
+      "path": "/Users/joel/Desktop/personal/2021-05-05 19:03:04 - HD 720p.mov",
+      "bytes": 1103369755
+    },
+    {
+      "path": "/Users/joel/Downloads/personal/2021-05-05 19:03:04 - HD 720p.mov",
+      "bytes": 1103369755
+    },
+    {
+      "path": "/Users/joel/Desktop/personal/90.Day.Fiance.Love.In.Paradise.S04E01.1080p.HEVC.x265-MeGusta[EZTVx.to].mkv",
+      "bytes": 687848116
+    },
+    {
+      "path": "/Users/joel/Downloads/personal/90.Day.Fiance.Love.In.Paradise.S04E01.1080p.HEVC.x265-MeGusta[EZTVx.to].mkv",
+      "bytes": 687848116
+    },
+    {
+      "path": "/Users/joel/Pictures/Photos Library.photoslibrary/resources/derivatives/thumbs/4532.ithmb",
+      "bytes": 618672640
+    },
+    {
+      "path": "/Users/joel/Downloads/ChatGPT.dmg",
+      "bytes": 593891632
+    },
+    {
+      "path": "/Users/joel/Pictures/Photos Library.photoslibrary/resources/cpl/cloudsync.noindex/storage/store.cloudphotodb",
+      "bytes": 391122944
+    },
+    {
+      "path": "/Users/joel/Downloads/blender-5.2.0-macos-arm64.dmg",
+      "bytes": 346163615
+    },
+    {
+      "path": "/Users/joel/Downloads/Claude.dmg",
+      "bytes": 333926411
+    },
+    {
+      "path": "/Users/joel/Downloads/Granola - AI Notepad.dmg",
+      "bytes": 277128368
+    },
+    {
+      "path": "/Users/joel/Downloads/googlechrome.dmg",
+      "bytes": 273102430
+    },
+    {
+      "path": "/Users/joel/Documents/2021-05-05 19:03:04 - SD 480p.mov",
+      "bytes": 230585423
+    },
+    {
+      "path": "/Users/joel/Pictures/Photos Library.photoslibrary/resources/journals/Asset-snapshot.plj",
+      "bytes": 213467530
+    },
+    {
+      "path": "/Users/joel/Downloads/Obsidian-1.12.7.dmg",
+      "bytes": 213334249
+    },
+    {
+      "path": "/Users/joel/Downloads/spoke-phone-desktop.dmg",
+      "bytes": 209186535
+    },
+    {
+      "path": "/Users/joel/Downloads/spoke-phone-desktop (1).dmg",
+      "bytes": 209186535
+    },
+    {
+      "path": "/Users/joel/Desktop/claude-code-backup.tar.gz",
+      "bytes": 192139976
+    },
+    {
+      "path": "/Users/joel/Downloads/claude-code-backup.tar.gz",
+      "bytes": 192139976
+    },
+    {
+      "path": "/Users/joel/Downloads/claude-code-backup 2.tar.gz",
+      "bytes": 192139976
+    },
+    {
+      "path": "/Users/joel/Downloads/Roam.dmg",
+      "bytes": 188405014
+    },
+    {
+      "path": "/Users/joel/Pictures/Photos Library.photoslibrary/resources/derivatives/thumbs/4133.ithmb",
+      "bytes": 176837120
+    },
+    {
+      "path": "/Users/joel/Pictures/Photos Library.photoslibrary/private/com.apple.photoanalysisd/caches/graph/PhotosGraph/photosgraph.kgdb",
+      "bytes": 168153088
+    },
+    {
+      "path": "/Users/joel/Pictures/Photos Library.photoslibrary/private/com.apple.photoanalysisd/caches/graph/PhotosGraph/photosgraph.kgdb-wal",
+      "bytes": 158257472
+    },
+    {
+      "path": "/Users/joel/Documents/Zoom/2021-05-12 12.38.09 Joel Carias' Zoom Meeting 95950996446/zoom_0.mp4",
+      "bytes": 90995162
+    },
+    {
+      "path": "/Users/joel/Pictures/Photos Library.photoslibrary/database/search/Spotlight/SpotlightKnowledgeEvents/index.V2/journals/12/cs_pc_c/skg_events_433BE890-A83D-4A9E-A727-911AAD5A7742_16777231_773462_journalAttr_52.journal",
+      "bytes": 75480624
+    },
+    {
+      "path": "/Users/joel/Pictures/Photos Library.photoslibrary/database/search/psi.sqlite",
+      "bytes": 64155648
+    },
+    {
+      "path": "/Users/joel/Pictures/Photos Library.photoslibrary/resources/derivatives/thumbs/3356.ithmb",
+      "bytes": 45109760
+    },
+    {
+      "path": "/Users/joel/Pictures/Photos Library.photoslibrary/private/com.apple.photoanalysisd/caches/graph/CLSBusinessCategoryCache.ROI.sqlite",
+      "bytes": 42536960
+    },
+    {
+      "path": "/Users/joel/Downloads/blender-logo-work/deps/cv2/cv2.abi3.so",
+      "bytes": 42303696
+    },
+    {
+      "path": "/Users/joel/Desktop/Alex music/beatport_tracks_2022-12-4/beatport_tracks_2023-03-2/17293244_Feel Free_(Remastered Full Length Original Mix).mp3",
+      "bytes": 30639058
+    },
+    {
+      "path": "/Users/joel/Downloads/Alex music/beatport_tracks_2022-12-4/beatport_tracks_2023-03-2/17293244_Feel Free_(Remastered Full Length Original Mix).mp3",
+      "bytes": 30639058
+    },
+    {
+      "path": "/Users/joel/Desktop/personal/Screen Recording 2022-05-18 at 11.41.45 AM.mov",
+      "bytes": 30236609
+    },
+    {
+      "path": "/Users/joel/Downloads/personal/Screen Recording 2022-05-18 at 11.41.45 AM.mov",
+      "bytes": 30236609
+    },
+    {
+      "path": "/Users/joel/Desktop/Alex music/beatport_tracks_2023-04/16846312_Pink Pong_(Original Mix).mp3",
+      "bytes": 25928316
+    },
+    {
+      "path": "/Users/joel/Downloads/Alex music/beatport_tracks_2023-04/16846312_Pink Pong_(Original Mix).mp3",
+      "bytes": 25928316
+    },
+    {
+      "path": "/Users/joel/Pictures/Photos Library.photoslibrary/database/search/Spotlight/NSFileProtectionCompleteUntilFirstUserAuthentication/index.spotlightV3/live.1.indexArrays",
+      "bytes": 25165824
+    },
+    {
+      "path": "/Users/joel/Pictures/Photos Library.photoslibrary/database/search/Spotlight/NSFileProtectionCompleteUntilFirstUserAuthentication/index.spotlightV3/live.1.shadowIndexArrays",
+      "bytes": 25165824
+    },
+    {
+      "path": "/Users/joel/Desktop/Alex music/beatport_tracks_2022-12-4/16641343_Tataji_(Original Mix).mp3",
+      "bytes": 24398693
+    },
+    {
+      "path": "/Users/joel/Downloads/Alex music/beatport_tracks_2022-12-4/16641343_Tataji_(Original Mix).mp3",
+      "bytes": 24398693
+    },
+    {
+      "path": "/Users/joel/Desktop/personal/WhatsApp Unknown 2021-05-17 at 2.05.15 PM.zip",
+      "bytes": 23521174
+    },
+    {
+      "path": "/Users/joel/Downloads/personal/WhatsApp Unknown 2021-05-17 at 2.05.15 PM.zip",
+      "bytes": 23521174
+    },
+    {
+      "path": "/Users/joel/Desktop/Alex music/beatport_tracks_2022-12-4/16997626_Chispa_(Original Mix).mp3",
+      "bytes": 23174306
+    },
+    {
+      "path": "/Users/joel/Downloads/Alex music/beatport_tracks_2022-12-4/16997626_Chispa_(Original Mix).mp3",
+      "bytes": 23174306
+    }
+  ],
+  "stale": [
+    {
+      "path": "/Users/joel/Desktop/personal/Screen Recording 2022-05-18 at 11.42.06 AM.mov",
+      "bytes": 1210801511,
+      "mtime": "2022-05-18"
+    },
+    {
+      "path": "/Users/joel/Downloads/personal/Screen Recording 2022-05-18 at 11.42.06 AM.mov",
+      "bytes": 1210801511,
+      "mtime": "2022-05-18"
+    },
+    {
+      "path": "/Users/joel/Desktop/personal/colombia - HD 720p.mov",
+      "bytes": 1103369794,
+      "mtime": "2021-05-06"
+    },
+    {
+      "path": "/Users/joel/Downloads/personal/colombia - HD 720p.mov",
+      "bytes": 1103369794,
+      "mtime": "2021-05-06"
+    },
+    {
+      "path": "/Users/joel/Desktop/personal/2021-05-05 19:03:04 - HD 720p.mov",
+      "bytes": 1103369755,
+      "mtime": "2021-05-05"
+    },
+    {
+      "path": "/Users/joel/Downloads/personal/2021-05-05 19:03:04 - HD 720p.mov",
+      "bytes": 1103369755,
+      "mtime": "2021-05-05"
+    },
+    {
+      "path": "/Users/joel/Desktop/personal/90.Day.Fiance.Love.In.Paradise.S04E01.1080p.HEVC.x265-MeGusta[EZTVx.to].mkv",
+      "bytes": 687848116,
+      "mtime": "2024-04-23"
+    },
+    {
+      "path": "/Users/joel/Downloads/personal/90.Day.Fiance.Love.In.Paradise.S04E01.1080p.HEVC.x265-MeGusta[EZTVx.to].mkv",
+      "bytes": 687848116,
+      "mtime": "2024-04-23"
+    },
+    {
+      "path": "/Users/joel/Documents/2021-05-05 19:03:04 - SD 480p.mov",
+      "bytes": 230585423,
+      "mtime": "2021-05-05"
+    },
+    {
+      "path": "/Users/joel/Documents/Zoom/2021-05-12 12.38.09 Joel Carias' Zoom Meeting 95950996446/zoom_0.mp4",
+      "bytes": 90995162,
+      "mtime": "2021-05-12"
+    },
+    {
+      "path": "/Users/joel/Desktop/Alex music/beatport_tracks_2022-12-4/beatport_tracks_2023-03-2/17293244_Feel Free_(Remastered Full Length Original Mix).mp3",
+      "bytes": 30639058,
+      "mtime": "2023-03-01"
+    },
+    {
+      "path": "/Users/joel/Downloads/Alex music/beatport_tracks_2022-12-4/beatport_tracks_2023-03-2/17293244_Feel Free_(Remastered Full Length Original Mix).mp3",
+      "bytes": 30639058,
+      "mtime": "2023-03-01"
+    },
+    {
+      "path": "/Users/joel/Desktop/personal/Screen Recording 2022-05-18 at 11.41.45 AM.mov",
+      "bytes": 30236609,
+      "mtime": "2022-05-18"
+    },
+    {
+      "path": "/Users/joel/Downloads/personal/Screen Recording 2022-05-18 at 11.41.45 AM.mov",
+      "bytes": 30236609,
+      "mtime": "2022-05-18"
+    },
+    {
+      "path": "/Users/joel/Desktop/Alex music/beatport_tracks_2023-04/16846312_Pink Pong_(Original Mix).mp3",
+      "bytes": 25928316,
+      "mtime": "2023-04-24"
+    },
+    {
+      "path": "/Users/joel/Downloads/Alex music/beatport_tracks_2023-04/16846312_Pink Pong_(Original Mix).mp3",
+      "bytes": 25928316,
+      "mtime": "2023-04-24"
+    },
+    {
+      "path": "/Users/joel/Desktop/Alex music/beatport_tracks_2022-12-4/16641343_Tataji_(Original Mix).mp3",
+      "bytes": 24398693,
+      "mtime": "2022-12-29"
+    },
+    {
+      "path": "/Users/joel/Downloads/Alex music/beatport_tracks_2022-12-4/16641343_Tataji_(Original Mix).mp3",
+      "bytes": 24398693,
+      "mtime": "2022-12-29"
+    },
+    {
+      "path": "/Users/joel/Desktop/personal/WhatsApp Unknown 2021-05-17 at 2.05.15 PM.zip",
+      "bytes": 23521174,
+      "mtime": "2021-05-17"
+    },
+    {
+      "path": "/Users/joel/Downloads/personal/WhatsApp Unknown 2021-05-17 at 2.05.15 PM.zip",
+      "bytes": 23521174,
+      "mtime": "2021-05-17"
+    },
+    {
+      "path": "/Users/joel/Desktop/Alex music/beatport_tracks_2022-12-4/16997626_Chispa_(Original Mix).mp3",
+      "bytes": 23174306,
+      "mtime": "2022-12-29"
+    },
+    {
+      "path": "/Users/joel/Downloads/Alex music/beatport_tracks_2022-12-4/16997626_Chispa_(Original Mix).mp3",
+      "bytes": 23174306,
+      "mtime": "2022-12-29"
+    },
+    {
+      "path": "/Users/joel/Desktop/Alex music/beatport_tracks_2022-12-4/beatport_tracks_2023-03-2/17340395_Oscillate_(Extended Mix).mp3",
+      "bytes": 23071689,
+      "mtime": "2023-03-01"
+    },
+    {
+      "path": "/Users/joel/Downloads/Alex music/beatport_tracks_2022-12-4/beatport_tracks_2023-03-2/17340395_Oscillate_(Extended Mix).mp3",
+      "bytes": 23071689,
+      "mtime": "2023-03-01"
+    },
+    {
+      "path": "/Users/joel/Desktop/Alex music/beatport_tracks_2022-12-4/17030838_Fragmented_(Original).mp3",
+      "bytes": 22465225,
+      "mtime": "2022-12-29"
+    },
+    {
+      "path": "/Users/joel/Downloads/Alex music/beatport_tracks_2022-12-4/17030838_Fragmented_(Original).mp3",
+      "bytes": 22465225,
+      "mtime": "2022-12-29"
+    },
+    {
+      "path": "/Users/joel/Desktop/Alex music/beatport_tracks_2022-12-4/17056737_Golden Key_(Original Mix).mp3",
+      "bytes": 21123725,
+      "mtime": "2022-12-29"
+    },
+    {
+      "path": "/Users/joel/Downloads/Alex music/beatport_tracks_2022-12-4/17056737_Golden Key_(Original Mix).mp3",
+      "bytes": 21123725,
+      "mtime": "2022-12-29"
+    },
+    {
+      "path": "/Users/joel/Desktop/Alex music/beatport_tracks_2022-12-4/beatport_tracks_2023-03-2/17104502_Parallax_(Original Mix).mp3",
+      "bytes": 21112699,
+      "mtime": "2023-03-01"
+    },
+    {
+      "path": "/Users/joel/Downloads/Alex music/beatport_tracks_2022-12-4/beatport_tracks_2023-03-2/17104502_Parallax_(Original Mix).mp3",
+      "bytes": 21112699,
+      "mtime": "2023-03-01"
+    },
+    {
+      "path": "/Users/joel/Desktop/Alex music/beatport_tracks_2023-03-3/17367258_Re\u0301volte_(vocal mix).mp3",
+      "bytes": 21030661,
+      "mtime": "2023-03-01"
+    },
+    {
+      "path": "/Users/joel/Downloads/Alex music/beatport_tracks_2023-03-3/17367258_Re\u0301volte_(vocal mix).mp3",
+      "bytes": 21030661,
+      "mtime": "2023-03-01"
+    },
+    {
+      "path": "/Users/joel/Desktop/Alex music/beatport_tracks_2022-12-4/16931840_Soil_(Original Mix).mp3",
+      "bytes": 20344793,
+      "mtime": "2022-12-29"
+    },
+    {
+      "path": "/Users/joel/Downloads/Alex music/beatport_tracks_2022-12-4/16931840_Soil_(Original Mix).mp3",
+      "bytes": 20344793,
+      "mtime": "2022-12-29"
+    },
+    {
+      "path": "/Users/joel/Desktop/Alex music/beatport_tracks_2022-12-4/beatport_tracks_2023-03-2/17382093_Wild One_(Original Mix).mp3",
+      "bytes": 20297467,
+      "mtime": "2023-03-01"
+    },
+    {
+      "path": "/Users/joel/Downloads/Alex music/beatport_tracks_2022-12-4/beatport_tracks_2023-03-2/17382093_Wild One_(Original Mix).mp3",
+      "bytes": 20297467,
+      "mtime": "2023-03-01"
+    },
+    {
+      "path": "/Users/joel/Desktop/Alex music/beatport_tracks_2022-12-3/17103382_High on Emotions_(Original Mix).mp3",
+      "bytes": 20297352,
+      "mtime": "2022-12-29"
+    },
+    {
+      "path": "/Users/joel/Downloads/Alex music/beatport_tracks_2022-12-3/17103382_High on Emotions_(Original Mix).mp3",
+      "bytes": 20297352,
+      "mtime": "2022-12-29"
+    },
+    {
+      "path": "/Users/joel/Desktop/Alex music/beatport_tracks_2022-12-4/17056732_Sun Dance_(Original Mix).mp3",
+      "bytes": 20103142,
+      "mtime": "2022-12-29"
+    },
+    {
+      "path": "/Users/joel/Downloads/Alex music/beatport_tracks_2022-12-4/17056732_Sun Dance_(Original Mix).mp3",
+      "bytes": 20103142,
+      "mtime": "2022-12-29"
+    },
+    {
+      "path": "/Users/joel/Desktop/Alex music/beatport_tracks_2022-12-3/16964437_Acid Burned_(Original Mix).mp3",
+      "bytes": 20090375,
+      "mtime": "2022-12-29"
+    },
+    {
+      "path": "/Users/joel/Downloads/Alex music/beatport_tracks_2022-12-3/16964437_Acid Burned_(Original Mix).mp3",
+      "bytes": 20090375,
+      "mtime": "2022-12-29"
+    },
+    {
+      "path": "/Users/joel/Desktop/Alex music/beatport_tracks_2022-12-3/17096237_Otherside_(Original Mix).mp3",
+      "bytes": 20002540,
+      "mtime": "2022-12-29"
+    },
+    {
+      "path": "/Users/joel/Downloads/Alex music/beatport_tracks_2022-12-3/17096237_Otherside_(Original Mix).mp3",
+      "bytes": 20002540,
+      "mtime": "2022-12-29"
+    },
+    {
+      "path": "/Users/joel/Desktop/Alex music/beatport_tracks_2022-12-4/beatport_tracks_2023-03-2/16947892_Fall_(Extended Miix).mp3",
+      "bytes": 19957277,
+      "mtime": "2023-03-01"
+    },
+    {
+      "path": "/Users/joel/Downloads/Alex music/beatport_tracks_2022-12-4/beatport_tracks_2023-03-2/16947892_Fall_(Extended Miix).mp3",
+      "bytes": 19957277,
+      "mtime": "2023-03-01"
+    },
+    {
+      "path": "/Users/joel/Desktop/Alex music/beatport_tracks_2022-12-3/16917464_Luminor_(Original Mix).mp3",
+      "bytes": 19897601,
+      "mtime": "2022-12-29"
+    },
+    {
+      "path": "/Users/joel/Downloads/Alex music/beatport_tracks_2022-12-3/16917464_Luminor_(Original Mix).mp3",
+      "bytes": 19897601,
+      "mtime": "2022-12-29"
+    },
+    {
+      "path": "/Users/joel/Desktop/Alex music/beatport_tracks_2022-12-4/beatport_tracks_2023-03-2/16998544_Endless Balance_(Stoneface & Terminal Extended Remix).mp3",
+      "bytes": 19892464,
+      "mtime": "2023-03-01"
+    },
+    {
+      "path": "/Users/joel/Downloads/Alex music/beatport_tracks_2022-12-4/beatport_tracks_2023-03-2/16998544_Endless Balance_(Stoneface & Terminal Extended Remix).mp3",
+      "bytes": 19892464,
+      "mtime": "2023-03-01"
+    },
+    {
+      "path": "/Users/joel/Desktop/Alex music/beatport_tracks_2022-12-4/beatport_tracks_2023-03-2/16967414_Adagio For Strings_(Extended Mix).mp3",
+      "bytes": 19843222,
+      "mtime": "2023-03-01"
+    },
+    {
+      "path": "/Users/joel/Downloads/Alex music/beatport_tracks_2022-12-4/beatport_tracks_2023-03-2/16967414_Adagio For Strings_(Extended Mix).mp3",
+      "bytes": 19843222,
+      "mtime": "2023-03-01"
+    },
+    {
+      "path": "/Users/joel/Desktop/Alex music/beatport_tracks_2022-12-3/17128060_Dying Light_(Original Mix).mp3",
+      "bytes": 19792206,
+      "mtime": "2022-12-29"
+    },
+    {
+      "path": "/Users/joel/Downloads/Alex music/beatport_tracks_2022-12-3/17128060_Dying Light_(Original Mix).mp3",
+      "bytes": 19792206,
+      "mtime": "2022-12-29"
+    },
+    {
+      "path": "/Users/joel/Desktop/Alex music/beatport_tracks_2022-12-4/16949302_Control_(Original Mix).mp3",
+      "bytes": 19777671,
+      "mtime": "2022-12-29"
+    },
+    {
+      "path": "/Users/joel/Downloads/Alex music/beatport_tracks_2022-12-4/16949302_Control_(Original Mix).mp3",
+      "bytes": 19777671,
+      "mtime": "2022-12-29"
+    },
+    {
+      "path": "/Users/joel/Desktop/Alex music/beatport_tracks_2022-12-4/beatport_tracks_2023-03-2/17263438_Kills Amphibians_(Original Mix).mp3",
+      "bytes": 19738724,
+      "mtime": "2023-03-01"
+    },
+    {
+      "path": "/Users/joel/Downloads/Alex music/beatport_tracks_2022-12-4/beatport_tracks_2023-03-2/17263438_Kills Amphibians_(Original Mix).mp3",
+      "bytes": 19738724,
+      "mtime": "2023-03-01"
+    },
+    {
+      "path": "/Users/joel/Desktop/Alex music/beatport_tracks_2022-12-4/beatport_tracks_2023-03-2/17273231_Phunky & Hutch_(Original Mix).mp3",
+      "bytes": 19688846,
+      "mtime": "2023-03-01"
+    },
+    {
+      "path": "/Users/joel/Downloads/Alex music/beatport_tracks_2022-12-4/beatport_tracks_2023-03-2/17273231_Phunky & Hutch_(Original Mix).mp3",
+      "bytes": 19688846,
+      "mtime": "2023-03-01"
+    },
+    {
+      "path": "/Users/joel/Desktop/Alex music/beatport_tracks_2022-12-4/16854025_War of the Worlds_(Original Mix).mp3",
+      "bytes": 19623016,
+      "mtime": "2022-12-29"
+    },
+    {
+      "path": "/Users/joel/Downloads/Alex music/beatport_tracks_2022-12-4/16854025_War of the Worlds_(Original Mix).mp3",
+      "bytes": 19623016,
+      "mtime": "2022-12-29"
+    },
+    {
+      "path": "/Users/joel/Desktop/Alex music/beatport_tracks_2022-12-3/17043772_Paracetamol_(TeknoGeneration Remix).mp3",
+      "bytes": 19602740,
+      "mtime": "2022-12-29"
+    },
+    {
+      "path": "/Users/joel/Downloads/Alex music/beatport_tracks_2022-12-3/17043772_Paracetamol_(TeknoGeneration Remix).mp3",
+      "bytes": 19602740,
+      "mtime": "2022-12-29"
+    },
+    {
+      "path": "/Users/joel/Desktop/Alex music/beatport_tracks_2022-12-4/17010881_Resurrection_(Original Mix).mp3",
+      "bytes": 19578568,
+      "mtime": "2022-12-29"
+    },
+    {
+      "path": "/Users/joel/Downloads/Alex music/beatport_tracks_2022-12-4/17010881_Resurrection_(Original Mix).mp3",
+      "bytes": 19578568,
+      "mtime": "2022-12-29"
+    },
+    {
+      "path": "/Users/joel/Desktop/Alex music/beatport_tracks_2022-12-4/17075394_2022_(Original Mix).mp3",
+      "bytes": 19522333,
+      "mtime": "2022-12-29"
+    },
+    {
+      "path": "/Users/joel/Downloads/Alex music/beatport_tracks_2022-12-4/17075394_2022_(Original Mix).mp3",
+      "bytes": 19522333,
+      "mtime": "2022-12-29"
+    },
+    {
+      "path": "/Users/joel/Desktop/Alex music/beatport_tracks_2022-12-4/beatport_tracks_2023-03-2/17226926_Drill_(Original Mix).mp3",
+      "bytes": 19326917,
+      "mtime": "2023-03-01"
+    },
+    {
+      "path": "/Users/joel/Downloads/Alex music/beatport_tracks_2022-12-4/beatport_tracks_2023-03-2/17226926_Drill_(Original Mix).mp3",
+      "bytes": 19326917,
+      "mtime": "2023-03-01"
+    },
+    {
+      "path": "/Users/joel/Desktop/Alex music/beatport_tracks_2022-12-4/16905308_Power feat. Mario Reyes_(Original Mix).mp3",
+      "bytes": 19323672,
+      "mtime": "2022-12-29"
+    },
+    {
+      "path": "/Users/joel/Downloads/Alex music/beatport_tracks_2022-12-4/16905308_Power feat. Mario Reyes_(Original Mix).mp3",
+      "bytes": 19323672,
+      "mtime": "2022-12-29"
+    },
+    {
+      "path": "/Users/joel/Desktop/Alex music/beatport_tracks_2022-12-3/17076943_Tunnel_(Original Mix).mp3",
+      "bytes": 19257202,
+      "mtime": "2022-12-29"
+    },
+    {
+      "path": "/Users/joel/Downloads/Alex music/beatport_tracks_2022-12-3/17076943_Tunnel_(Original Mix).mp3",
+      "bytes": 19257202,
+      "mtime": "2022-12-29"
+    },
+    {
+      "path": "/Users/joel/Desktop/Alex music/beatport_tracks_2022-12-4/17067827_No Control_(Original Mix).mp3",
+      "bytes": 19229489,
+      "mtime": "2022-12-29"
+    },
+    {
+      "path": "/Users/joel/Downloads/Alex music/beatport_tracks_2022-12-4/17067827_No Control_(Original Mix).mp3",
+      "bytes": 19229489,
+      "mtime": "2022-12-29"
+    },
+    {
+      "path": "/Users/joel/Desktop/Alex music/beatport_tracks_2022-12-4/17075397_The Space Between Us_(Original Mix).mp3",
+      "bytes": 19226357,
+      "mtime": "2022-12-29"
+    },
+    {
+      "path": "/Users/joel/Downloads/Alex music/beatport_tracks_2022-12-4/17075397_The Space Between Us_(Original Mix).mp3",
+      "bytes": 19226357,
+      "mtime": "2022-12-29"
+    },
+    {
+      "path": "/Users/joel/Documents/Zoom/2021-05-12 12.38.09 Joel Carias' Zoom Meeting 95950996446/audio_only.m4a",
+      "bytes": 19220349,
+      "mtime": "2021-05-12"
+    },
+    {
+      "path": "/Users/joel/Desktop/Alex music/beatport_tracks_2022-12-3/17106048_Subversion_(Extended Mix).mp3",
+      "bytes": 19183873,
+      "mtime": "2022-12-29"
+    },
+    {
+      "path": "/Users/joel/Downloads/Alex music/beatport_tracks_2022-12-3/17106048_Subversion_(Extended Mix).mp3",
+      "bytes": 19183873,
+      "mtime": "2022-12-29"
+    },
+    {
+      "path": "/Users/joel/Desktop/Alex music/beatport_tracks_2022-12-4/17051191_Arch of Light_(Original Mix).mp3",
+      "bytes": 19119878,
+      "mtime": "2022-12-29"
+    },
+    {
+      "path": "/Users/joel/Downloads/Alex music/beatport_tracks_2022-12-4/17051191_Arch of Light_(Original Mix).mp3",
+      "bytes": 19119878,
+      "mtime": "2022-12-29"
+    },
+    {
+      "path": "/Users/joel/Desktop/Alex music/beatport_tracks_2022-12-4/16977652_Sauron_(Original Mix).mp3",
+      "bytes": 19108455,
+      "mtime": "2022-12-29"
+    },
+    {
+      "path": "/Users/joel/Downloads/Alex music/beatport_tracks_2022-12-4/16977652_Sauron_(Original Mix).mp3",
+      "bytes": 19108455,
+      "mtime": "2022-12-29"
+    },
+    {
+      "path": "/Users/joel/Desktop/Alex music/beatport_tracks_2022-12-4/16926624_Empire feat Laura Rogalli (Natema Remix)_(Remix).mp3",
+      "bytes": 19021408,
+      "mtime": "2022-12-29"
+    },
+    {
+      "path": "/Users/joel/Downloads/Alex music/beatport_tracks_2022-12-4/16926624_Empire feat Laura Rogalli (Natema Remix)_(Remix).mp3",
+      "bytes": 19021408,
+      "mtime": "2022-12-29"
+    },
+    {
+      "path": "/Users/joel/Desktop/Alex music/beatport_tracks_2022-12-4/beatport_tracks_2023-03-2/16937421_COLLIDE_(Extended Mix).mp3",
+      "bytes": 18998782,
+      "mtime": "2023-03-01"
+    },
+    {
+      "path": "/Users/joel/Downloads/Alex music/beatport_tracks_2022-12-4/beatport_tracks_2023-03-2/16937421_COLLIDE_(Extended Mix).mp3",
+      "bytes": 18998782,
+      "mtime": "2023-03-01"
+    },
+    {
+      "path": "/Users/joel/Desktop/Alex music/beatport_tracks_2022-12-4/16979904_Andindendwa feat. Bukeka_(Original Mix).mp3",
+      "bytes": 18991866,
+      "mtime": "2022-12-29"
+    },
+    {
+      "path": "/Users/joel/Downloads/Alex music/beatport_tracks_2022-12-4/16979904_Andindendwa feat. Bukeka_(Original Mix).mp3",
+      "bytes": 18991866,
+      "mtime": "2022-12-29"
+    },
+    {
+      "path": "/Users/joel/Desktop/Alex music/beatport_tracks_2022-12-4/16901671_B1_(Original Mix).mp3",
+      "bytes": 18955937,
+      "mtime": "2022-12-29"
+    },
+    {
+      "path": "/Users/joel/Downloads/Alex music/beatport_tracks_2022-12-4/16901671_B1_(Original Mix).mp3",
+      "bytes": 18955937,
+      "mtime": "2022-12-29"
+    },
+    {
+      "path": "/Users/joel/Desktop/Alex music/beatport_tracks_2022-12-4/beatport_tracks_2023-03-2/17295559_An Issue_(Original Mix).mp3",
+      "bytes": 18767145,
+      "mtime": "2023-03-01"
+    },
+    {
+      "path": "/Users/joel/Downloads/Alex music/beatport_tracks_2022-12-4/beatport_tracks_2023-03-2/17295559_An Issue_(Original Mix).mp3",
+      "bytes": 18767145,
+      "mtime": "2023-03-01"
+    },
+    {
+      "path": "/Users/joel/Desktop/Alex music/beatport_tracks_2022-12-4/beatport_tracks_2023-03-2/17068007_Damnatio memoriae_(Original Mix).mp3",
+      "bytes": 18763521,
+      "mtime": "2023-03-01"
+    },
+    {
+      "path": "/Users/joel/Downloads/Alex music/beatport_tracks_2022-12-4/beatport_tracks_2023-03-2/17068007_Damnatio memoriae_(Original Mix).mp3",
+      "bytes": 18763521,
+      "mtime": "2023-03-01"
+    },
+    {
+      "path": "/Users/joel/Desktop/Alex music/beatport_tracks_2022-12-3/17122233_The Light_(Iman Deeper Remix).mp3",
+      "bytes": 18747866,
+      "mtime": "2022-12-29"
+    },
+    {
+      "path": "/Users/joel/Downloads/Alex music/beatport_tracks_2022-12-3/17122233_The Light_(Iman Deeper Remix).mp3",
+      "bytes": 18747866,
+      "mtime": "2022-12-29"
+    },
+    {
+      "path": "/Users/joel/Desktop/Alex music/beatport_tracks_2022-12-4/16729718_Vulture_(Original Mix).mp3",
+      "bytes": 18693303,
+      "mtime": "2022-12-29"
+    }
+  ],
+  "stale_count": 1368,
+  "duplicates": [
+    {
+      "hash": "101b58abd834636589c9ce050df34137382013c3c87afef2715021c0be9b3ec0",
+      "size": 1218969335,
+      "paths": [
+        "/Users/joel/Desktop/2.0. Real Estate Explanation of Investment James Videos & Pricing updated 2.1.pptx",
+        "/Users/joel/Downloads/2.0. Real Estate Explanation of Investment James Videos & Pricing updated 2.1.pptx"
+      ],
+      "wasted_bytes": 1218969335
+    },
+    {
+      "hash": "7bd418d7f083c4cdcec15e2a6e2faa80b99503563240c96e88661da5dc87631f",
+      "size": 1210801511,
+      "paths": [
+        "/Users/joel/Desktop/personal/Screen Recording 2022-05-18 at 11.42.06 AM.mov",
+        "/Users/joel/Downloads/personal/Screen Recording 2022-05-18 at 11.42.06 AM.mov"
+      ],
+      "wasted_bytes": 1210801511
+    },
+    {
+      "hash": "a0cc17b84f4d04ff6a5b63c21d794fa5b4af8b3e921b057823ef6ce1ed8b24a3",
+      "size": 1103369794,
+      "paths": [
+        "/Users/joel/Desktop/personal/colombia - HD 720p.mov",
+        "/Users/joel/Downloads/personal/colombia - HD 720p.mov"
+      ],
+      "wasted_bytes": 1103369794
+    },
+    {
+      "hash": "7c5623584792b9652bece04d8db6c215c0691721b689b5a17a832b9b68c0438a",
+      "size": 1103369755,
+      "paths": [
+        "/Users/joel/Desktop/personal/2021-05-05 19:03:04 - HD 720p.mov",
+        "/Users/joel/Downloads/personal/2021-05-05 19:03:04 - HD 720p.mov"
+      ],
+      "wasted_bytes": 1103369755
+    },
+    {
+      "hash": "1e5059e77fb16748e5555d1ff738ffa4a5ae27c7330574cb0e0f97f2d83bfcd1",
+      "size": 687848116,
+      "paths": [
+        "/Users/joel/Desktop/personal/90.Day.Fiance.Love.In.Paradise.S04E01.1080p.HEVC.x265-MeGusta[EZTVx.to].mkv",
+        "/Users/joel/Downloads/personal/90.Day.Fiance.Love.In.Paradise.S04E01.1080p.HEVC.x265-MeGusta[EZTVx.to].mkv"
+      ],
+      "wasted_bytes": 687848116
+    },
+    {
+      "hash": "7d64ca93c92ff761e59a4b6deb719e4c5a1a7b043dd13f974acc4a5c4b52d6a5",
+      "size": 192139976,
+      "paths": [
+        "/Users/joel/Desktop/claude-code-backup.tar.gz",
+        "/Users/joel/Downloads/claude-code-backup 2.tar.gz",
+        "/Users/joel/Downloads/claude-code-backup.tar.gz"
+      ],
+      "wasted_bytes": 384279952
+    },
+    {
+      "hash": "71e61ebe31e4b7a59468f4ad511d51d09bf4a6389c6d6b5995689e2543a622d7",
+      "size": 209186535,
+      "paths": [
+        "/Users/joel/Downloads/spoke-phone-desktop (1).dmg",
+        "/Users/joel/Downloads/spoke-phone-desktop.dmg"
+      ],
+      "wasted_bytes": 209186535
+    },
+    {
+      "hash": "554a3072bc776824198cbc9da16d6c094937ade7f33be43a73ee9ea71c945e57",
+      "size": 30639058,
+      "paths": [
+        "/Users/joel/Desktop/Alex music/beatport_tracks_2022-12-4/beatport_tracks_2023-03-2/17293244_Feel Free_(Remastered Full Length Original Mix).mp3",
+        "/Users/joel/Downloads/Alex music/beatport_tracks_2022-12-4/beatport_tracks_2023-03-2/17293244_Feel Free_(Remastered Full Length Original Mix).mp3"
+      ],
+      "wasted_bytes": 30639058
+    },
+    {
+      "hash": "db19e19c6a557ac5a52a0474457fc9a833e30005d70fdbca7b5f99787630bade",
+      "size": 30236609,
+      "paths": [
+        "/Users/joel/Desktop/personal/Screen Recording 2022-05-18 at 11.41.45 AM.mov",
+        "/Users/joel/Downloads/personal/Screen Recording 2022-05-18 at 11.41.45 AM.mov"
+      ],
+      "wasted_bytes": 30236609
+    },
+    {
+      "hash": "1ffea483345e36c728cad16017dbecf36ecb1fdb36962a8ae0b9cf04ac1245c0",
+      "size": 25928316,
+      "paths": [
+        "/Users/joel/Desktop/Alex music/beatport_tracks_2023-04/16846312_Pink Pong_(Original Mix).mp3",
+        "/Users/joel/Downloads/Alex music/beatport_tracks_2023-04/16846312_Pink Pong_(Original Mix).mp3"
+      ],
+      "wasted_bytes": 25928316
+    },
+    {
+      "hash": "1d5dd35adfa9e8a0852a9b425efffb8a0d6b8bcb74e1539098ed389b03585a27",
+      "size": 24398693,
+      "paths": [
+        "/Users/joel/Desktop/Alex music/beatport_tracks_2022-12-4/16641343_Tataji_(Original Mix).mp3",
+        "/Users/joel/Downloads/Alex music/beatport_tracks_2022-12-4/16641343_Tataji_(Original Mix).mp3"
+      ],
+      "wasted_bytes": 24398693
+    },
+    {
+      "hash": "10530f0a27a28d1ca0e16ad0cdfaf1b8de8511f4d5093c1597f3b77f369505a9",
+      "size": 23521174,
+      "paths": [
+        "/Users/joel/Desktop/personal/WhatsApp Unknown 2021-05-17 at 2.05.15 PM.zip",
+        "/Users/joel/Downloads/personal/WhatsApp Unknown 2021-05-17 at 2.05.15 PM.zip"
+      ],
+      "wasted_bytes": 23521174
+    },
+    {
+      "hash": "9e886a9581bba90e581df69332d16acf1147656ac7868641690c48f692f16c04",
+      "size": 23174306,
+      "paths": [
+        "/Users/joel/Desktop/Alex music/beatport_tracks_2022-12-4/16997626_Chispa_(Original Mix).mp3",
+        "/Users/joel/Downloads/Alex music/beatport_tracks_2022-12-4/16997626_Chispa_(Original Mix).mp3"
+      ],
+      "wasted_bytes": 23174306
+    },
+    {
+      "hash": "311691803e66e6fca18592fe66d20a0df1e0ff6f9c49491f490ed52593061832",
+      "size": 23071689,
+      "paths": [
+        "/Users/joel/Desktop/Alex music/beatport_tracks_2022-12-4/beatport_tracks_2023-03-2/17340395_Oscillate_(Extended Mix).mp3",
+        "/Users/joel/Downloads/Alex music/beatport_tracks_2022-12-4/beatport_tracks_2023-03-2/17340395_Oscillate_(Extended Mix).mp3"
+      ],
+      "wasted_bytes": 23071689
+    },
+    {
+      "hash": "46b7a36bb85558449be02f43f43070ae418def1c241993266cac34877c20e9b3",
+      "size": 22465225,
+      "paths": [
+        "/Users/joel/Desktop/Alex music/beatport_tracks_2022-12-4/17030838_Fragmented_(Original).mp3",
+        "/Users/joel/Downloads/Alex music/beatport_tracks_2022-12-4/17030838_Fragmented_(Original).mp3"
+      ],
+      "wasted_bytes": 22465225
+    },
+    {
+      "hash": "149676f91e29f6993ceb4f717b4bf45bb5d62d111030c05c674a49fce1ffc900",
+      "size": 21221376,
+      "paths": [
+        "/Users/joel/Pictures/Photos Library.photoslibrary/database/search/Spotlight/NSFileProtectionCompleteUntilFirstUserAuthentication/index.spotlightV3/.store.db",
+        "/Users/joel/Pictures/Photos Library.photoslibrary/database/search/Spotlight/NSFileProtectionCompleteUntilFirstUserAuthentication/index.spotlightV3/store.db"
+      ],
+      "wasted_bytes": 21221376
+    },
+    {
+      "hash": "822d62e8c4a7427cdf950594ca669762e1100e4d540968ee428f163ea14c6f28",
+      "size": 21123725,
+      "paths": [
+        "/Users/joel/Desktop/Alex music/beatport_tracks_2022-12-4/17056737_Golden Key_(Original Mix).mp3",
+        "/Users/joel/Downloads/Alex music/beatport_tracks_2022-12-4/17056737_Golden Key_(Original Mix).mp3"
+      ],
+      "wasted_bytes": 21123725
+    },
+    {
+      "hash": "e7d0c0cccd044a8daed978842b193e10510b3250547c5395e2c76594a67e72c4",
+      "size": 21112699,
+      "paths": [
+        "/Users/joel/Desktop/Alex music/beatport_tracks_2022-12-4/beatport_tracks_2023-03-2/17104502_Parallax_(Original Mix).mp3",
+        "/Users/joel/Downloads/Alex music/beatport_tracks_2022-12-4/beatport_tracks_2023-03-2/17104502_Parallax_(Original Mix).mp3"
+      ],
+      "wasted_bytes": 21112699
+    },
+    {
+      "hash": "1a6118a16dc57333205111b2c2ff82449d947f1c1e52e28243e8e295958ee36a",
+      "size": 21030661,
+      "paths": [
+        "/Users/joel/Desktop/Alex music/beatport_tracks_2023-03-3/17367258_Re\u0301volte_(vocal mix).mp3",
+        "/Users/joel/Downloads/Alex music/beatport_tracks_2023-03-3/17367258_Re\u0301volte_(vocal mix).mp3"
+      ],
+      "wasted_bytes": 21030661
+    },
+    {
+      "hash": "026aad6278a994e941690a61200bc7b69da60fdad318f446b785ea14912333d3",
+      "size": 20344793,
+      "paths": [
+        "/Users/joel/Desktop/Alex music/beatport_tracks_2022-12-4/16931840_Soil_(Original Mix).mp3",
+        "/Users/joel/Downloads/Alex music/beatport_tracks_2022-12-4/16931840_Soil_(Original Mix).mp3"
+      ],
+      "wasted_bytes": 20344793
+    },
+    {
+      "hash": "382af2354f7022fa1326184be6f106e1694673f5e5dc9f7d6e7905b64f2a7eda",
+      "size": 20297467,
+      "paths": [
+        "/Users/joel/Desktop/Alex music/beatport_tracks_2022-12-4/beatport_tracks_2023-03-2/17382093_Wild One_(Original Mix).mp3",
+        "/Users/joel/Downloads/Alex music/beatport_tracks_2022-12-4/beatport_tracks_2023-03-2/17382093_Wild One_(Original Mix).mp3"
+      ],
+      "wasted_bytes": 20297467
+    },
+    {
+      "hash": "45cea52875287ccc82e3450ca89a94be4eaa8abf890c4948b9863c03305580f9",
+      "size": 20297352,
+      "paths": [
+        "/Users/joel/Desktop/Alex music/beatport_tracks_2022-12-3/17103382_High on Emotions_(Original Mix).mp3",
+        "/Users/joel/Downloads/Alex music/beatport_tracks_2022-12-3/17103382_High on Emotions_(Original Mix).mp3"
+      ],
+      "wasted_bytes": 20297352
+    },
+    {
+      "hash": "03b63218a683290e3d876f58e31163e3436615c6f6ed3d7109363a9e87d9506b",
+      "size": 20103142,
+      "paths": [
+        "/Users/joel/Desktop/Alex music/beatport_tracks_2022-12-4/17056732_Sun Dance_(Original Mix).mp3",
+        "/Users/joel/Downloads/Alex music/beatport_tracks_2022-12-4/17056732_Sun Dance_(Original Mix).mp3"
+      ],
+      "wasted_bytes": 20103142
+    },
+    {
+      "hash": "c8975b840c7bebcbfafd637f75789a0906b9acaeb6a41a5e3d302eca359da6f2",
+      "size": 20090375,
+      "paths": [
+        "/Users/joel/Desktop/Alex music/beatport_tracks_2022-12-3/16964437_Acid Burned_(Original Mix).mp3",
+        "/Users/joel/Downloads/Alex music/beatport_tracks_2022-12-3/16964437_Acid Burned_(Original Mix).mp3"
+      ],
+      "wasted_bytes": 20090375
+    },
+    {
+      "hash": "247d1233512bbae7d38286b8ba65982865df0eff926a50d60d353890ec5408e2",
+      "size": 20002540,
+      "paths": [
+        "/Users/joel/Desktop/Alex music/beatport_tracks_2022-12-3/17096237_Otherside_(Original Mix).mp3",
+        "/Users/joel/Downloads/Alex music/beatport_tracks_2022-12-3/17096237_Otherside_(Original Mix).mp3"
+      ],
+      "wasted_bytes": 20002540
+    },
+    {
+      "hash": "5e8f41ce1292dc216a83a21c3ed67f3e68f16c2c623d32b1426c9d4a1a22f122",
+      "size": 19957277,
+      "paths": [
+        "/Users/joel/Desktop/Alex music/beatport_tracks_2022-12-4/beatport_tracks_2023-03-2/16947892_Fall_(Extended Miix).mp3",
+        "/Users/joel/Downloads/Alex music/beatport_tracks_2022-12-4/beatport_tracks_2023-03-2/16947892_Fall_(Extended Miix).mp3"
+      ],
+      "wasted_bytes": 19957277
+    },
+    {
+      "hash": "d2cb135e0b2e44273c308eca601fb7da07cbf86d4ca24e2fa22f0aa6d8426c57",
+      "size": 19897601,
+      "paths": [
+        "/Users/joel/Desktop/Alex music/beatport_tracks_2022-12-3/16917464_Luminor_(Original Mix).mp3",
+        "/Users/joel/Downloads/Alex music/beatport_tracks_2022-12-3/16917464_Luminor_(Original Mix).mp3"
+      ],
+      "wasted_bytes": 19897601
+    },
+    {
+      "hash": "a6ba5aaf309d59bcaaa31e09c3fbbefb5e4331613f03cfe9fd0799a8e1b6da64",
+      "size": 19892464,
+      "paths": [
+        "/Users/joel/Desktop/Alex music/beatport_tracks_2022-12-4/beatport_tracks_2023-03-2/16998544_Endless Balance_(Stoneface & Terminal Extended Remix).mp3",
+        "/Users/joel/Downloads/Alex music/beatport_tracks_2022-12-4/beatport_tracks_2023-03-2/16998544_Endless Balance_(Stoneface & Terminal Extended Remix).mp3"
+      ],
+      "wasted_bytes": 19892464
+    },
+    {
+      "hash": "c8264d5d32c909e4835cdc77ebd714d5a5705babe19681a646e0c3db30642e8b",
+      "size": 19843222,
+      "paths": [
+        "/Users/joel/Desktop/Alex music/beatport_tracks_2022-12-4/beatport_tracks_2023-03-2/16967414_Adagio For Strings_(Extended Mix).mp3",
+        "/Users/joel/Downloads/Alex music/beatport_tracks_2022-12-4/beatport_tracks_2023-03-2/16967414_Adagio For Strings_(Extended Mix).mp3"
+      ],
+      "wasted_bytes": 19843222
+    },
+    {
+      "hash": "007d68d9c096bf7c602f3ebf392da32a63f6704563930d1bde28ff474a82a930",
+      "size": 19792206,
+      "paths": [
+        "/Users/joel/Desktop/Alex music/beatport_tracks_2022-12-3/17128060_Dying Light_(Original Mix).mp3",
+        "/Users/joel/Downloads/Alex music/beatport_tracks_2022-12-3/17128060_Dying Light_(Original Mix).mp3"
+      ],
+      "wasted_bytes": 19792206
+    },
+    {
+      "hash": "8155a2efe77cb62cb21b823496bb16799a828bae8040358ba95080927e20b3a3",
+      "size": 19777671,
+      "paths": [
+        "/Users/joel/Desktop/Alex music/beatport_tracks_2022-12-4/16949302_Control_(Original Mix).mp3",
+        "/Users/joel/Downloads/Alex music/beatport_tracks_2022-12-4/16949302_Control_(Original Mix).mp3"
+      ],
+      "wasted_bytes": 19777671
+    },
+    {
+      "hash": "d47172397a7ee332e42be90b0d26ee4f154a424b34c10c387f54ef3f67c9803a",
+      "size": 19738724,
+      "paths": [
+        "/Users/joel/Desktop/Alex music/beatport_tracks_2022-12-4/beatport_tracks_2023-03-2/17263438_Kills Amphibians_(Original Mix).mp3",
+        "/Users/joel/Downloads/Alex music/beatport_tracks_2022-12-4/beatport_tracks_2023-03-2/17263438_Kills Amphibians_(Original Mix).mp3"
+      ],
+      "wasted_bytes": 19738724
+    },
+    {
+      "hash": "e726a24cce375d81f0da4e6e3d01b8c2acea740c42ab270ce2e2e76e91f99950",
+      "size": 19688846,
+      "paths": [
+        "/Users/joel/Desktop/Alex music/beatport_tracks_2022-12-4/beatport_tracks_2023-03-2/17273231_Phunky & Hutch_(Original Mix).mp3",
+        "/Users/joel/Downloads/Alex music/beatport_tracks_2022-12-4/beatport_tracks_2023-03-2/17273231_Phunky & Hutch_(Original Mix).mp3"
+      ],
+      "wasted_bytes": 19688846
+    },
+    {
+      "hash": "01d0a44e847a7eb30b38cbc6ad5b8724ffa3ebe4b17e312e0d3f4e0d4e2a040a",
+      "size": 19623016,
+      "paths": [
+        "/Users/joel/Desktop/Alex music/beatport_tracks_2022-12-4/16854025_War of the Worlds_(Original Mix).mp3",
+        "/Users/joel/Downloads/Alex music/beatport_tracks_2022-12-4/16854025_War of the Worlds_(Original Mix).mp3"
+      ],
+      "wasted_bytes": 19623016
+    },
+    {
+      "hash": "9a6fb8df3d04208df19af50150013794065509e6c9d46f0974adee60c2adee94",
+      "size": 19602740,
+      "paths": [
+        "/Users/joel/Desktop/Alex music/beatport_tracks_2022-12-3/17043772_Paracetamol_(TeknoGeneration Remix).mp3",
+        "/Users/joel/Downloads/Alex music/beatport_tracks_2022-12-3/17043772_Paracetamol_(TeknoGeneration Remix).mp3"
+      ],
+      "wasted_bytes": 19602740
+    },
+    {
+      "hash": "a80fbf4f68c5b945611bfb681f44abfaaf449441a8a94664b9b0f994150d2fe4",
+      "size": 19578568,
+      "paths": [
+        "/Users/joel/Desktop/Alex music/beatport_tracks_2022-12-4/17010881_Resurrection_(Original Mix).mp3",
+        "/Users/joel/Downloads/Alex music/beatport_tracks_2022-12-4/17010881_Resurrection_(Original Mix).mp3"
+      ],
+      "wasted_bytes": 19578568
+    },
+    {
+      "hash": "5285367930d335cb98666df7e21fa6dc74f2fe7485851fef03acf699ca2d8960",
+      "size": 19522333,
+      "paths": [
+        "/Users/joel/Desktop/Alex music/beatport_tracks_2022-12-4/17075394_2022_(Original Mix).mp3",
+        "/Users/joel/Downloads/Alex music/beatport_tracks_2022-12-4/17075394_2022_(Original Mix).mp3"
+      ],
+      "wasted_bytes": 19522333
+    },
+    {
+      "hash": "ae06376990a12be9f37cdefd989983cde5c5bcefedb821ab9dc2f6a9fd72cd8d",
+      "size": 19326917,
+      "paths": [
+        "/Users/joel/Desktop/Alex music/beatport_tracks_2022-12-4/beatport_tracks_2023-03-2/17226926_Drill_(Original Mix).mp3",
+        "/Users/joel/Downloads/Alex music/beatport_tracks_2022-12-4/beatport_tracks_2023-03-2/17226926_Drill_(Original Mix).mp3"
+      ],
+      "wasted_bytes": 19326917
+    },
+    {
+      "hash": "3a42d02376b873a3e19a2a24e517c4d14fcb66133060b4c46ea70190b4487464",
+      "size": 19323672,
+      "paths": [
+        "/Users/joel/Desktop/Alex music/beatport_tracks_2022-12-4/16905308_Power feat. Mario Reyes_(Original Mix).mp3",
+        "/Users/joel/Downloads/Alex music/beatport_tracks_2022-12-4/16905308_Power feat. Mario Reyes_(Original Mix).mp3"
+      ],
+      "wasted_bytes": 19323672
+    },
+    {
+      "hash": "91b03f01355bbfdb37380a0de3cdcb276659090546cc9949303a93c44c71ba91",
+      "size": 19257202,
+      "paths": [
+        "/Users/joel/Desktop/Alex music/beatport_tracks_2022-12-3/17076943_Tunnel_(Original Mix).mp3",
+        "/Users/joel/Downloads/Alex music/beatport_tracks_2022-12-3/17076943_Tunnel_(Original Mix).mp3"
+      ],
+      "wasted_bytes": 19257202
+    },
+    {
+      "hash": "f22ee0156aecc35e57d239243ba8a113990d9f44fc2b8d6059286dea3dbc1cf7",
+      "size": 19229489,
+      "paths": [
+        "/Users/joel/Desktop/Alex music/beatport_tracks_2022-12-4/17067827_No Control_(Original Mix).mp3",
+        "/Users/joel/Downloads/Alex music/beatport_tracks_2022-12-4/17067827_No Control_(Original Mix).mp3"
+      ],
+      "wasted_bytes": 19229489
+    },
+    {
+      "hash": "df27652b4a8ace5d8726e8057dc3eccbe6469ade54ce0e9273ab8cdacf09ebc3",
+      "size": 19226357,
+      "paths": [
+        "/Users/joel/Desktop/Alex music/beatport_tracks_2022-12-4/17075397_The Space Between Us_(Original Mix).mp3",
+        "/Users/joel/Downloads/Alex music/beatport_tracks_2022-12-4/17075397_The Space Between Us_(Original Mix).mp3"
+      ],
+      "wasted_bytes": 19226357
+    },
+    {
+      "hash": "922504a0dc4d14e9ce2c4881e8fdef432fe0e40aae6acccc56f876c4e808e67b",
+      "size": 19183873,
+      "paths": [
+        "/Users/joel/Desktop/Alex music/beatport_tracks_2022-12-3/17106048_Subversion_(Extended Mix).mp3",
+        "/Users/joel/Downloads/Alex music/beatport_tracks_2022-12-3/17106048_Subversion_(Extended Mix).mp3"
+      ],
+      "wasted_bytes": 19183873
+    },
+    {
+      "hash": "5bf21cb85e9473451382364359a4d9052f03f8bee7e0e68d0f8fe7be5ec0ef7e",
+      "size": 19119878,
+      "paths": [
+        "/Users/joel/Desktop/Alex music/beatport_tracks_2022-12-4/17051191_Arch of Light_(Original Mix).mp3",
+        "/Users/joel/Downloads/Alex music/beatport_tracks_2022-12-4/17051191_Arch of Light_(Original Mix).mp3"
+      ],
+      "wasted_bytes": 19119878
+    },
+    {
+      "hash": "046de26e8744cbe8ac7bf3f6f38fe3f0bc7de40cc781fe016d8d9dba09c60424",
+      "size": 19108455,
+      "paths": [
+        "/Users/joel/Desktop/Alex music/beatport_tracks_2022-12-4/16977652_Sauron_(Original Mix).mp3",
+        "/Users/joel/Downloads/Alex music/beatport_tracks_2022-12-4/16977652_Sauron_(Original Mix).mp3"
+      ],
+      "wasted_bytes": 19108455
+    },
+    {
+      "hash": "aabfd91f290191b3bf60ae5ccbd0415e64c3121448c1889f9211a40267bbf7b0",
+      "size": 19021408,
+      "paths": [
+        "/Users/joel/Desktop/Alex music/beatport_tracks_2022-12-4/16926624_Empire feat Laura Rogalli (Natema Remix)_(Remix).mp3",
+        "/Users/joel/Downloads/Alex music/beatport_tracks_2022-12-4/16926624_Empire feat Laura Rogalli (Natema Remix)_(Remix).mp3"
+      ],
+      "wasted_bytes": 19021408
+    },
+    {
+      "hash": "4698aef2665a60df260f4346513df8936e905480552bc619ebb1b5a4d6f554d4",
+      "size": 18998782,
+      "paths": [
+        "/Users/joel/Desktop/Alex music/beatport_tracks_2022-12-4/beatport_tracks_2023-03-2/16937421_COLLIDE_(Extended Mix).mp3",
+        "/Users/joel/Downloads/Alex music/beatport_tracks_2022-12-4/beatport_tracks_2023-03-2/16937421_COLLIDE_(Extended Mix).mp3"
+      ],
+      "wasted_bytes": 18998782
+    },
+    {
+      "hash": "0d727b223516bedd4021c7be901c4fe808ab49931a342d35ce528948e2d16e6a",
+      "size": 18991866,
+      "paths": [
+        "/Users/joel/Desktop/Alex music/beatport_tracks_2022-12-4/16979904_Andindendwa feat. Bukeka_(Original Mix).mp3",
+        "/Users/joel/Downloads/Alex music/beatport_tracks_2022-12-4/16979904_Andindendwa feat. Bukeka_(Original Mix).mp3"
+      ],
+      "wasted_bytes": 18991866
+    },
+    {
+      "hash": "d68bdde6da04c92e2888ee6887b72cc8f23dcbc23e40512ee390f1a7680837dc",
+      "size": 18955937,
+      "paths": [
+        "/Users/joel/Desktop/Alex music/beatport_tracks_2022-12-4/16901671_B1_(Original Mix).mp3",
+        "/Users/joel/Downloads/Alex music/beatport_tracks_2022-12-4/16901671_B1_(Original Mix).mp3"
+      ],
+      "wasted_bytes": 18955937
+    },
+    {
+      "hash": "7f43f664668653d385f55bdadfd7687bc04b72d355a246617b1dd9de4ad96fa2",
+      "size": 18767145,
+      "paths": [
+        "/Users/joel/Desktop/Alex music/beatport_tracks_2022-12-4/beatport_tracks_2023-03-2/17295559_An Issue_(Original Mix).mp3",
+        "/Users/joel/Downloads/Alex music/beatport_tracks_2022-12-4/beatport_tracks_2023-03-2/17295559_An Issue_(Original Mix).mp3"
+      ],
+      "wasted_bytes": 18767145
+    },
+    {
+      "hash": "3142bce2a3038482f1fcb52280217484393a679ffef56f0794c48ffbb1806a44",
+      "size": 18763521,
+      "paths": [
+        "/Users/joel/Desktop/Alex music/beatport_tracks_2022-12-4/beatport_tracks_2023-03-2/17068007_Damnatio memoriae_(Original Mix).mp3",
+        "/Users/joel/Downloads/Alex music/beatport_tracks_2022-12-4/beatport_tracks_2023-03-2/17068007_Damnatio memoriae_(Original Mix).mp3"
+      ],
+      "wasted_bytes": 18763521
+    },
+    {
+      "hash": "96650e7a13c39181e074aad5a0cb3d84323ee1eeff057f542d93d49f013cc809",
+      "size": 18747866,
+      "paths": [
+        "/Users/joel/Desktop/Alex music/beatport_tracks_2022-12-3/17122233_The Light_(Iman Deeper Remix).mp3",
+        "/Users/joel/Downloads/Alex music/beatport_tracks_2022-12-3/17122233_The Light_(Iman Deeper Remix).mp3"
+      ],
+      "wasted_bytes": 18747866
+    },
+    {
+      "hash": "3a33a525d789dc21b7d37a6ae7a1424b2fe71aaf02be1d8bc8921fa53d0f1235",
+      "size": 18693303,
+      "paths": [
+        "/Users/joel/Desktop/Alex music/beatport_tracks_2022-12-4/16729718_Vulture_(Original Mix).mp3",
+        "/Users/joel/Downloads/Alex music/beatport_tracks_2022-12-4/16729718_Vulture_(Original Mix).mp3"
+      ],
+      "wasted_bytes": 18693303
+    },
+    {
+      "hash": "f1b9f60e3831485189a12f90fa211b2eb2f4dd9819922a2a3b9e019a87a7cdd0",
+      "size": 18677325,
+      "paths": [
+        "/Users/joel/Desktop/Alex music/beatport_tracks_2022-12-4/beatport_tracks_2023-03-2/17243427_Intro + Starwars_(Remastered).mp3",
+        "/Users/joel/Downloads/Alex music/beatport_tracks_2022-12-4/beatport_tracks_2023-03-2/17243427_Intro + Starwars_(Remastered).mp3"
+      ],
+      "wasted_bytes": 18677325
+    },
+    {
+      "hash": "f2483e7c0d652082ffb822d974e6d8751d96b77184d9c6206f59a621a2f05e00",
+      "size": 18626560,
+      "paths": [
+        "/Users/joel/Desktop/Alex music/beatport_tracks_2022-12-4/17025750_Whales_(Extended Mix).mp3",
+        "/Users/joel/Downloads/Alex music/beatport_tracks_2022-12-4/17025750_Whales_(Extended Mix).mp3"
+      ],
+      "wasted_bytes": 18626560
+    },
+    {
+      "hash": "e15bb9462d1bce2c693eee88180d4783a4ba0b9d8e297559d55c479f1cc2b6a9",
+      "size": 18615791,
+      "paths": [
+        "/Users/joel/Desktop/Alex music/beatport_tracks_2022-12-4/16778501_I Feel Love_(Original Mix).mp3",
+        "/Users/joel/Downloads/Alex music/beatport_tracks_2022-12-4/16778501_I Feel Love_(Original Mix).mp3"
+      ],
+      "wasted_bytes": 18615791
+    },
+    {
+      "hash": "daa81b304e30b5f739fb202c049f1e6412b5f7e678fe4fb8637fbc4234e1d24c",
+      "size": 18598349,
+      "paths": [
+        "/Users/joel/Desktop/Alex music/beatport_tracks_2022-12-4/17062594_Indian Sound_(Q-Green Dub Remix).mp3",
+        "/Users/joel/Downloads/Alex music/beatport_tracks_2022-12-4/17062594_Indian Sound_(Q-Green Dub Remix).mp3"
+      ],
+      "wasted_bytes": 18598349
+    },
+    {
+      "hash": "bbecd4ec67480777f7830aee07b70cad522ec7e791fe022fc2920763b9965c06",
+      "size": 18559556,
+      "paths": [
+        "/Users/joel/Desktop/Alex music/beatport_tracks_2022-12-4/17031111_Enchiridion_(Original Mix).mp3",
+        "/Users/joel/Downloads/Alex music/beatport_tracks_2022-12-4/17031111_Enchiridion_(Original Mix).mp3"
+      ],
+      "wasted_bytes": 18559556
+    },
+    {
+      "hash": "74ddb05f990df9a86857b1434f07d264eb9e2fff8e3059cca45461d6a03bb316",
+      "size": 18537897,
+      "paths": [
+        "/Users/joel/Desktop/Alex music/beatport_tracks_2022-12-4/16799163_Flight 109_(Original Mix).mp3",
+        "/Users/joel/Downloads/Alex music/beatport_tracks_2022-12-4/16799163_Flight 109_(Original Mix).mp3"
+      ],
+      "wasted_bytes": 18537897
+    },
+    {
+      "hash": "f11c738348cce6b1295f33df3ab37da2a1965e08cb31f3a15ec068cf59e0b59b",
+      "size": 18474613,
+      "paths": [
+        "/Users/joel/Desktop/Alex music/beatport_tracks_2022-12-3/17099356_Never Stop_(Original Mix).mp3",
+        "/Users/joel/Downloads/Alex music/beatport_tracks_2022-12-3/17099356_Never Stop_(Original Mix).mp3"
+      ],
+      "wasted_bytes": 18474613
+    }
+  ],
+  "duplicate_group_count": 367,
+  "wasted_bytes": 10621542863,
+  "files_hashed": 745,
+  "danger_zones": [
+    {
+      "path": "/Users/joel/Documents/Codex/2026-05-28/you-are-taking-over-the-elite 2/repo",
+      "reasons": [
+        "git repository",
+        "installed dependencies",
+        "javascript project"
+      ]
+    },
+    {
+      "path": "/Users/joel/Documents/Codex/2026-05-28/you-are-taking-over-the-elite/repo",
+      "reasons": [
+        "git repository",
+        "installed dependencies",
+        "javascript project"
+      ]
+    },
+    {
+      "path": "/Users/joel/Documents/Codex/2026-06-15/please-tell-me-what-was-done/outputs/callpipe",
+      "reasons": [
+        "javascript project"
+      ]
+    },
+    {
+      "path": "/Users/joel/Documents/Codex/2026-06-16/did-you-respond-to-google-auth",
+      "reasons": [
+        "javascript project"
+      ]
+    },
+    {
+      "path": "/Users/joel/Documents/Codex/2026-06-10/i-need-you-to-review-my/work/video_ad/node_ffmpeg",
+      "reasons": [
+        "installed dependencies",
+        "javascript project"
+      ]
+    },
+    {
+      "path": "/Users/joel/Documents/Codex/2026-06-10/i-need-you-to-review-my/work/stable-lights-creations",
+      "reasons": [
+        "git repository",
+        "installed dependencies",
+        "javascript project"
+      ]
+    }
+  ],
+  "cloud_roots": [
+    "/Users/joel/Library/Mobile Documents"
+  ],
+  "symlinks": [],
+  "databases": [
+    {
+      "path": "/Users/joel/Downloads/blender-logo-work/deps/numpy/_core/tests/data/astype_copy.pkl",
+      "bytes": 716
+    },
+    {
+      "path": "/Users/joel/Pictures/Photos Library.photoslibrary/database/Photos.sqlite",
+      "bytes": 1159122944
+    },
+    {
+      "path": "/Users/joel/Pictures/Photos Library.photoslibrary/database/photos.db",
+      "bytes": 49152
+    },
+    {
+      "path": "/Users/joel/Pictures/Photos Library.photoslibrary/database/metaSchema.db",
+      "bytes": 49152
+    },
+    {
+      "path": "/Users/joel/Pictures/Photos Library.photoslibrary/database/search/psi.sqlite",
+      "bytes": 64155648
+    },
+    {
+      "path": "/Users/joel/Pictures/Photos Library.photoslibrary/database/search/Spotlight/NSFileProtectionCompleteUntilFirstUserAuthentication/index.spotlightV3/.store.db",
+      "bytes": 21221376
+    },
+    {
+      "path": "/Users/joel/Pictures/Photos Library.photoslibrary/database/search/Spotlight/NSFileProtectionCompleteUntilFirstUserAuthentication/index.spotlightV3/store.db",
+      "bytes": 21221376
+    },
+    {
+      "path": "/Users/joel/Pictures/Photos Library.photoslibrary/internal/csutaxonomy/CSUTaxonomy.sqlite",
+      "bytes": 28672
+    },
+    {
+      "path": "/Users/joel/Pictures/Photos Library.photoslibrary/private/com.apple.photoanalysisd/caches/graph/CLSBusinessCategoryCache.POI.sqlite",
+      "bytes": 8261632
+    },
+    {
+      "path": "/Users/joel/Pictures/Photos Library.photoslibrary/private/com.apple.photoanalysisd/caches/graph/CLSPublicEventCache.sqlite",
+      "bytes": 491520
+    },
+    {
+      "path": "/Users/joel/Pictures/Photos Library.photoslibrary/private/com.apple.photoanalysisd/caches/graph/CLSLocationCache.sqlite",
+      "bytes": 22917120
+    },
+    {
+      "path": "/Users/joel/Pictures/Photos Library.photoslibrary/private/com.apple.photoanalysisd/caches/graph/CLSBusinessCategoryCache.Nature.sqlite",
+      "bytes": 14401536
+    },
+    {
+      "path": "/Users/joel/Pictures/Photos Library.photoslibrary/private/com.apple.photoanalysisd/caches/graph/musiccache.sqlite",
+      "bytes": 1740800
+    },
+    {
+      "path": "/Users/joel/Pictures/Photos Library.photoslibrary/private/com.apple.photoanalysisd/caches/graph/PGCurationCache.sqlite.sqlite",
+      "bytes": 4096
+    },
+    {
+      "path": "/Users/joel/Pictures/Photos Library.photoslibrary/private/com.apple.photoanalysisd/caches/graph/CLSBusinessCategoryCache.ROI.sqlite",
+      "bytes": 42536960
+    },
+    {
+      "path": "/Users/joel/Pictures/Photos Library.photoslibrary/private/com.apple.photoanalysisd/caches/graph/CLSBusinessCategoryCache.AOI.sqlite",
+      "bytes": 1974272
+    },
+    {
+      "path": "/Users/joel/Pictures/Photos Library.photoslibrary/private/com.apple.mediaanalysisd/MediaAnalysis/MediaAnalysis.sqlite",
+      "bytes": 462848
+    },
+    {
+      "path": "/Users/joel/Pictures/Photos Library.photoslibrary/private/com.apple.mediaanalysisd/caches/vision/VUIndex.sqlite",
+      "bytes": 204800
+    },
+    {
+      "path": "/Users/joel/Music/Music/Music Library.musiclibrary/com.apple.MusicKit/downloaded_catalog_data/MusicCatalogData.db",
+      "bytes": 4096
+    }
+  ]
+}
