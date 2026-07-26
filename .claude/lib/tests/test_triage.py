@@ -184,5 +184,36 @@ class TestNoDestructiveSurface(unittest.TestCase):
             )
 
 
+
+
+class TestCorrectionRecency(unittest.TestCase):
+    """Append-only file: the newest correction for a matcher must win."""
+
+    TWICE = """
+- 2026-01-01 | domain:skool.com | FYI | first call
+- 2026-07-26 | domain:skool.com | NOISE | changed my mind
+"""
+
+    def test_newest_correction_wins(self):
+        rules = triage.parse_rules(self.TWICE)
+        b, why = triage.classify(
+            {"sender": "noreply@skool.com", "subject": "new post"}, rules, set())
+        self.assertEqual(b, triage.NOISE, why)
+        self.assertIn("changed my mind", why)
+
+    def test_undated_correction_loses_to_dated(self):
+        rules = triage.parse_rules(
+            "- | domain:x.com | FYI | no date\n- 2026-07-26 | domain:x.com | NOISE | dated\n")
+        b, _ = triage.classify({"sender": "a@x.com"}, rules, set())
+        self.assertEqual(b, triage.NOISE)
+
+    def test_later_line_wins_when_dates_tie(self):
+        rules = triage.parse_rules(
+            "- 2026-07-26 | domain:y.com | FYI | earlier line\n"
+            "- 2026-07-26 | domain:y.com | ACT | later line\n")
+        b, why = triage.classify({"sender": "a@y.com"}, rules, set())
+        self.assertEqual(b, triage.ACT, why)
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)

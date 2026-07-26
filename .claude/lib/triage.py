@@ -117,20 +117,28 @@ CORRECTION_RE = re.compile(
 
 
 def parse_rules(text):
-    """Read correction lines. Malformed lines are skipped, not guessed at."""
-    rules = []
-    for line in text.splitlines():
+    """Read correction lines. Malformed lines are skipped, not guessed at.
+
+    Returned newest-first. The file is append-only, so a matcher Joel corrected
+    twice appears twice; the most recent correction must win. Iterating in file
+    order gave the oldest rule precedence, which meant changing your mind about a
+    sender had no effect.
+    """
+    found = []
+    for i, line in enumerate(text.splitlines()):
         m = CORRECTION_RE.match(line)
         if not m:
             continue
-        rules.append(Rule(
+        found.append((m.group("date") or "", i, Rule(
             m.group("kind").lower(),
             m.group("value").strip(),
             m.group("bucket").upper(),
             (m.group("reason") or "").strip(),
             m.group("date") or "",
-        ))
-    return rules
+        )))
+    # Newest date first; for equal or missing dates, later in the file wins.
+    found.sort(key=lambda t: (t[0], t[1]), reverse=True)
+    return [r for _, _, r in found]
 
 
 def load_rules(path=RULES):

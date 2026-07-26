@@ -29,22 +29,29 @@ def _missing(reason):
     return {"available": False, "reason": reason, "items": []}
 
 
-def load_feed(path=FEED, now=None):
-    """Load connector data written by /refresh. Never invents freshness."""
+def _unreadable(reason):
+    """Consistent shape for every failure. A caller must never have to guess whether
+    a key is absent because the feed was fine or because it wasn't read."""
+    return {"present": False, "reason": reason, "age_min": None,
+            "stale": False, "unknown_age": True, "data": {}}
+
+
+def load_feed(path=None, now=None):
+    """Load connector data written by /refresh. Never invents freshness.
+
+    `path` resolves at call time rather than binding FEED as a default, so the
+    module's paths are redirectable — for tests, and for anything that needs to
+    point at a different repo.
+    """
+    path = path or FEED
     now = now or datetime.datetime.now().astimezone()
     if not os.path.exists(path):
-        return {
-            "present": False,
-            "reason": "dashboard/feed.json does not exist — run /refresh",
-            "age_min": None,
-            "data": {},
-        }
+        return _unreadable("dashboard/feed.json does not exist — run /refresh")
     try:
         with open(path) as f:
             data = json.load(f)
     except (json.JSONDecodeError, OSError) as e:
-        return {"present": False, "reason": f"feed.json unreadable: {e}",
-                "age_min": None, "data": {}}
+        return _unreadable(f"feed.json unreadable: {e}")
 
     age = None
     ts = data.get("generated_at")
@@ -147,8 +154,9 @@ def _parse_applescript_date(s):
     return None
 
 
-def heartbeat(path=HEARTBEAT, now=None):
+def heartbeat(path=None, now=None):
     """Scheduled task health. A task that never ran is a miss, not a blank."""
+    path = path or HEARTBEAT
     now = now or datetime.datetime.now().astimezone()
     if not os.path.exists(path):
         return {"available": False, "reason": "heartbeat.json missing", "tasks": []}
@@ -181,8 +189,9 @@ def heartbeat(path=HEARTBEAT, now=None):
     return {"available": True, "reason": None, "tasks": sorted(tasks, key=lambda t: t["name"])}
 
 
-def automation_summary(path=AUTOMATION_LOG, hours=24, now=None):
+def automation_summary(path=None, hours=24, now=None):
     """What automation actually did, from the hook's ground-truth log."""
+    path = path or AUTOMATION_LOG
     now = now or datetime.datetime.now().astimezone()
     if not os.path.exists(path):
         return {"available": False, "reason": "automation-log.jsonl missing",
@@ -218,8 +227,9 @@ def automation_summary(path=AUTOMATION_LOG, hours=24, now=None):
             "recent": recent[:25], "unparsed": unparsed, "window_hours": hours}
 
 
-def needs_me_file(path=NEEDS_ME):
+def needs_me_file(path=None):
     """Low-confidence actions and anything explicitly flagged for Joel."""
+    path = path or NEEDS_ME
     if not os.path.exists(path):
         return {"available": False, "reason": "state/needs-me.md missing", "items": []}
     items = []

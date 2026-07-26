@@ -112,11 +112,18 @@ def build_needs_me(fd, project_list, hb, today=None):
 
     # 5. Scheduled tasks that missed their window
     for t in hb.get("tasks", []):
-        if t["missed"]:
-            items.append({
-                "text": f"{t['name']} — " + ("never run" if t["never_run"]
-                        else f"{round(t['age_hours'])}h since last run"),
-                "source": "heartbeat.json", "severity": "normal", "label": "schedule"})
+        if not t["missed"]:
+            continue
+        if t["never_run"]:
+            when = "never run"
+        elif t.get("age_hours") is None:
+            # last_run is present but unparseable. Say so — don't crash, and don't
+            # pretend the task never ran, because those are different problems.
+            when = f"last_run is unreadable ({t.get('last_run')!r})"
+        else:
+            when = f"{round(t['age_hours'])}h since last run"
+        items.append({"text": f"{t['name']} — {when}", "source": "heartbeat.json",
+                      "severity": "normal", "label": "schedule"})
 
     rank = {"high": 0, "normal": 1}
     items.sort(key=lambda i: rank.get(i.get("severity"), 1))
