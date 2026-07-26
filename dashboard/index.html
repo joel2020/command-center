@@ -1,0 +1,408 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Command Center</title>
+<style>
+  :root{
+    --ground:#0B1016;
+    --panel:#111A23;
+    --panel-2:#0E1620;
+    --rule:#1E2C38;
+    --ink:#D8E2EA;
+    --dim:#6F8496;
+    --dimmer:#4A5B69;
+    --signal:#FFB454;
+    --alarm:#FF5C57;
+    --ok:#4FD1A5;
+    --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--ground);
+    color:var(--ink);
+    font-family:var(--sans);
+    font-size:15px;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+    padding:0 0 6rem;
+  }
+  .wrap{max-width:1080px;margin:0 auto;padding:0 1.5rem}
+
+  /* ─── header: the freshness contract ─────────────────────────── */
+  header{
+    position:sticky;top:0;z-index:10;
+    background:rgba(11,16,22,.94);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--rule);
+  }
+  .head-in{
+    display:flex;flex-wrap:wrap;gap:.75rem 1.5rem;
+    align-items:baseline;justify-content:space-between;
+    padding:1.1rem 0 1rem;
+  }
+  h1{
+    font-family:var(--mono);
+    font-size:.94rem;font-weight:600;
+    letter-spacing:.24em;text-transform:uppercase;
+    margin:0;color:var(--ink);
+  }
+  .stamp{
+    font-family:var(--mono);font-size:.74rem;color:var(--dim);letter-spacing:.04em;
+    /* must be able to shrink and wrap — it is the longest thing in the header
+       and it is never allowed to run off the edge */
+    flex:1 1 auto;min-width:0;text-align:right;
+  }
+  .stamp b{color:var(--ink);font-weight:500}
+  body.stale header{border-bottom-color:var(--alarm)}
+  body.stale .stamp{color:var(--alarm)}
+  body.stale .stamp b{color:var(--alarm)}
+
+  /* ─── sections ───────────────────────────────────────────────── */
+  section{margin-top:2.75rem}
+  .sec-head{
+    display:flex;align-items:baseline;gap:.7rem;
+    border-bottom:1px solid var(--rule);
+    padding-bottom:.5rem;margin-bottom:1.1rem;
+  }
+  h2{
+    font-family:var(--mono);
+    font-size:.78rem;font-weight:600;
+    letter-spacing:.2em;text-transform:uppercase;
+    margin:0;color:var(--ink);
+  }
+  .count{font-family:var(--mono);font-size:.72rem;color:var(--dim)}
+  .sec-note{margin-left:auto;font-family:var(--mono);font-size:.7rem;color:var(--dim)}
+
+  /* ─── cards ──────────────────────────────────────────────────── */
+  .card{
+    background:var(--panel);
+    border:1px solid var(--rule);
+    border-left:2px solid var(--rule);
+    border-radius:3px;
+    padding:.8rem .95rem;
+    margin-bottom:.5rem;
+  }
+  .card.sig{border-left-color:var(--signal)}
+  .card.bad{border-left-color:var(--alarm)}
+  .card.good{border-left-color:var(--ok)}
+  .card-top{display:flex;gap:.75rem;align-items:baseline;flex-wrap:wrap}
+  .card-title{font-weight:500;color:var(--ink)}
+  .card-body{color:var(--dim);font-size:.9rem;margin-top:.2rem}
+  .tag{
+    font-family:var(--mono);font-size:.66rem;
+    letter-spacing:.1em;text-transform:uppercase;
+    color:var(--dim);border:1px solid var(--rule);
+    border-radius:2px;padding:.08rem .38rem;white-space:nowrap;
+  }
+  .tag.sig{color:var(--signal);border-color:rgba(255,180,84,.35)}
+  .tag.bad{color:var(--alarm);border-color:rgba(255,92,87,.35)}
+  .tag.ok{color:var(--ok);border-color:rgba(79,209,165,.3)}
+  .money{color:var(--signal);font-family:var(--mono);font-size:.78rem}
+
+  /* provenance: every card says where it came from and how old it is */
+  .prov{
+    font-family:var(--mono);font-size:.68rem;color:var(--dim);
+    margin-top:.45rem;letter-spacing:.03em;
+    display:flex;gap:.55rem;flex-wrap:wrap;align-items:center;
+  }
+  .prov .sep{color:var(--rule)}
+
+  /* ─── empty / missing states ─────────────────────────────────── */
+  .empty{
+    font-family:var(--mono);font-size:.76rem;color:var(--dim);
+    border:1px dashed var(--rule);border-radius:3px;
+    padding:.85rem .95rem;
+  }
+  .missing{border-color:rgba(255,92,87,.35);color:var(--alarm)}
+
+  /* ─── projects ───────────────────────────────────────────────── */
+  .filters{display:flex;gap:.4rem;margin-left:auto}
+  .filters button{
+    font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;
+    background:transparent;color:var(--dim);
+    border:1px solid var(--rule);border-radius:2px;
+    padding:.2rem .5rem;cursor:pointer;
+  }
+  .filters button[aria-pressed="true"]{color:var(--ground);background:var(--signal);border-color:var(--signal)}
+  .filters button:focus-visible,a:focus-visible{outline:2px solid var(--signal);outline-offset:2px}
+  .proj-grid{display:grid;gap:.5rem;grid-template-columns:repeat(auto-fill,minmax(320px,1fr))}
+  .next{color:var(--ink)}
+  .next.none{color:var(--dim);font-style:italic}
+
+  /* ─── in flight ──────────────────────────────────────────────── */
+  .hb{display:grid;gap:.4rem;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));margin-bottom:.9rem}
+  .hb-item{
+    display:flex;justify-content:space-between;align-items:baseline;gap:.5rem;
+    font-family:var(--mono);font-size:.74rem;
+    border:1px solid var(--rule);border-left:2px solid var(--ok);
+    border-radius:3px;padding:.5rem .6rem;background:var(--panel-2);
+  }
+  .hb-item.miss{border-left-color:var(--alarm)}
+  .hb-item .n{color:var(--ink)}
+  .hb-item .v{color:var(--dim)}
+  .hb-item.miss .v{color:var(--alarm)}
+  .log{font-family:var(--mono);font-size:.72rem;color:var(--dim)}
+  .log div{padding:.15rem 0;border-bottom:1px solid rgba(30,44,56,.5);display:flex;gap:.6rem}
+  .log .t{color:var(--dimmer);min-width:5.2em}
+  .log .k{color:var(--ink);min-width:7em}
+  .log .g{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+  footer{margin-top:3rem;padding-top:1rem;border-top:1px solid var(--rule);
+    font-family:var(--mono);font-size:.68rem;color:var(--dim)}
+
+  /* ─── entrance ───────────────────────────────────────────────── */
+  section{animation:rise .38s cubic-bezier(.2,.7,.3,1) backwards}
+  section:nth-of-type(1){animation-delay:.02s}
+  section:nth-of-type(2){animation-delay:.07s}
+  section:nth-of-type(3){animation-delay:.12s}
+  section:nth-of-type(4){animation-delay:.17s}
+  section:nth-of-type(5){animation-delay:.22s}
+  @keyframes rise{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion:reduce){
+    section{animation:none}
+    *{transition:none!important}
+  }
+  @media (max-width:640px){
+    .wrap{padding:0 1rem}
+    .proj-grid,.hb{grid-template-columns:1fr}
+    .sec-note{margin-left:0;width:100%}
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap head-in">
+    <h1>Command Center</h1>
+    <div class="stamp" id="stamp"></div>
+  </div>
+</header>
+
+<main class="wrap" id="main"></main>
+
+<script id="cc-data" type="application/json">{"generated_at": "2026-07-25T23:59:09.513449-04:00", "generated_human": "Sat Jul 25, 11:59 PM", "feed": {"present": false, "reason": "dashboard/feed.json does not exist — run /refresh", "age_min": null, "stale": null, "unknown_age": null}, "today": {"date_human": "Sat Jul 25, 2026", "calendar": {"available": true, "reason": null, "items": []}, "conflicts": [], "due": [], "meetings": []}, "needs_me": {"items": [{"text": "email-triage — never run", "source": "heartbeat.json", "severity": "normal", "label": "schedule"}, {"text": "evening-digest — never run", "source": "heartbeat.json", "severity": "normal", "label": "schedule"}, {"text": "morning-brief — never run", "source": "heartbeat.json", "severity": "normal", "label": "schedule"}, {"text": "weekly-review — never run", "source": "heartbeat.json", "severity": "normal", "label": "schedule"}], "overflow": 0}, "projects": {"available": true, "reason": null, "items": []}, "in_flight": {"heartbeat": {"available": true, "reason": null, "tasks": [{"name": "email-triage", "last_run": null, "never_run": true, "age_hours": null, "max_age_hours": 2, "missed": true}, {"name": "evening-digest", "last_run": null, "never_run": true, "age_hours": null, "max_age_hours": 26, "missed": true}, {"name": "morning-brief", "last_run": null, "never_run": true, "age_hours": null, "max_age_hours": 26, "missed": true}, {"name": "weekly-review", "last_run": null, "never_run": true, "age_hours": null, "max_age_hours": 176, "missed": true}]}, "automation": {"available": true, "reason": null, "total": 87, "by_tool": {"Bash": 27, "Read": 3, "Skill": 2, "AskUserQuestion": 3, "ToolSearch": 5, "TaskCreate": 8, "TaskUpdate": 11, "mcp__claude_ai_Gmail__search_threads": 1, "mcp__claude_ai_Linear__list_issues": 1, "Edit": 10, "Write": 8, "mcp__claude_ai_Granola__list_meetings": 1, "mcp__whatsapp__whatsapp_list_chats": 2, "mcp__whatsapp__whatsapp_connection_status": 1, "mcp__plugin_chrome-devtools-mcp_chrome-devtools__new_page": 1, "mcp__plugin_chrome-devtools-mcp_chrome-devtools__resize_page": 1, "mcp__plugin_chrome-devtools-mcp_chrome-devtools__take_screenshot": 1, "mcp__plugin_chrome-devtools-mcp_chrome-devtools__list_console_messages": 1}, "recent": [{"ts": "2026-07-25T23:59:05.833985-04:00", "tool": "Bash", "target": "cd ~/command-center && osascript -e 'tell application \"Calendar\" to quit' 2>/dev/null; sleep 2; python3 .claude/lib/buil"}, {"ts": "2026-07-25T23:59:00.384289-04:00", "tool": "Edit", "target": "/Users/joel/command-center/.claude/lib/feed.py"}, {"ts": "2026-07-25T23:58:55.780781-04:00", "tool": "Edit", "target": "/Users/joel/command-center/.claude/lib/feed.py"}, {"ts": "2026-07-25T23:58:46.492769-04:00", "tool": "Edit", "target": "/Users/joel/command-center/.claude/lib/feed.py"}, {"ts": "2026-07-25T23:58:33.765096-04:00", "tool": "Bash", "target": "open -gj -a Calendar 2>&1; sleep 4; osascript -e 'tell application \"Calendar\" to get name of first calendar' 2>&1 | head"}, {"ts": "2026-07-25T23:58:28.202090-04:00", "tool": "Bash", "target": "cd ~/command-center && python3 -c \"\nimport sys; sys.path.insert(0,'.claude/lib')\nimport feed, json\nr = feed.calendar_eve"}, {"ts": "2026-07-25T23:58:23.311539-04:00", "tool": "Edit", "target": "/Users/joel/command-center/.claude/lib/feed.py"}, {"ts": "2026-07-25T23:58:07.085477-04:00", "tool": "Bash", "target": "cd ~/command-center && python3 -c \"\nimport sys; sys.path.insert(0,'.claude/lib')\nimport feed, json\nr = feed.calendar_eve"}, {"ts": "2026-07-25T23:57:53.564741-04:00", "tool": "Bash", "target": "cd ~/command-center && time python3 .claude/lib/build_dashboard.py 2>&1"}, {"ts": "2026-07-25T23:57:48.665135-04:00", "tool": "Edit", "target": "/Users/joel/command-center/dashboard/template.html"}, {"ts": "2026-07-25T23:57:41.442310-04:00", "tool": "Edit", "target": "/Users/joel/command-center/dashboard/template.html"}, {"ts": "2026-07-25T23:57:19.531470-04:00", "tool": "mcp__plugin_chrome-devtools-mcp_chrome-devtools__list_console_messages", "target": ""}, {"ts": "2026-07-25T23:57:16.286675-04:00", "tool": "mcp__plugin_chrome-devtools-mcp_chrome-devtools__take_screenshot", "target": ""}, {"ts": "2026-07-25T23:57:11.575488-04:00", "tool": "mcp__plugin_chrome-devtools-mcp_chrome-devtools__resize_page", "target": ""}, {"ts": "2026-07-25T23:57:05.663981-04:00", "tool": "mcp__plugin_chrome-devtools-mcp_chrome-devtools__new_page", "target": "file:///Users/joel/command-center/dashboard/index.html"}, {"ts": "2026-07-25T23:57:03.657951-04:00", "tool": "ToolSearch", "target": ""}, {"ts": "2026-07-25T23:56:57.885342-04:00", "tool": "Bash", "target": "cd ~/command-center && python3 - <<'EOF'\nimport json, re\nh = open('dashboard/index.html').read()\nprint(\"size:\", len(h))\n"}, {"ts": "2026-07-25T23:56:47.441387-04:00", "tool": "Bash", "target": "python3 .claude/lib/build_dashboard.py --no-calendar 2>&1"}, {"ts": "2026-07-25T23:56:43.853824-04:00", "tool": "Write", "target": "/Users/joel/command-center/state/needs-me.md"}, {"ts": "2026-07-25T23:56:37.107030-04:00", "tool": "Write", "target": "/Users/joel/command-center/.claude/lib/build_dashboard.py"}, {"ts": "2026-07-25T23:56:05.166504-04:00", "tool": "Edit", "target": "/Users/joel/command-center/dashboard/template.html"}, {"ts": "2026-07-25T23:56:01.983541-04:00", "tool": "Edit", "target": "/Users/joel/command-center/dashboard/template.html"}, {"ts": "2026-07-25T23:55:57.257510-04:00", "tool": "Write", "target": "/Users/joel/command-center/dashboard/template.html"}, {"ts": "2026-07-25T23:54:07.410836-04:00", "tool": "Skill", "target": ""}, {"ts": "2026-07-25T23:53:58.176436-04:00", "tool": "Write", "target": "/Users/joel/command-center/.claude/lib/feed.py"}], "unparsed": 0, "window_hours": 24}}, "loose_ends": {"available": false, "reason": "not collected — run /dashboard to refresh connectors", "items": []}}</script>
+<script>
+const D = JSON.parse(document.getElementById('cc-data').textContent);
+const $ = (h) => { const t = document.createElement('template'); t.innerHTML = h.trim(); return t.content.firstChild; };
+const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+/* ── header: state the freshness contract, loudly if broken ── */
+(function stamp(){
+  const f = D.feed || {};
+  const bits = [`generated <b>${esc(D.generated_human)}</b>`];
+  if (!f.present)        { bits.push(`connectors <b>NOT LOADED</b>`); document.body.classList.add('stale'); }
+  else if (f.unknown_age){ bits.push(`connector age <b>UNKNOWN</b>`); document.body.classList.add('stale'); }
+  else {
+    const m = Math.round(f.age_min);
+    bits.push(`connectors <b>${m < 1 ? 'just now' : m + 'm old'}</b>`);
+    if (f.stale) document.body.classList.add('stale');
+  }
+  document.getElementById('stamp').innerHTML = bits.join(' · ');
+})();
+
+/* ── generic renderers ── */
+function section(id, title, count, note){
+  const s = $(`<section id="${id}"><div class="sec-head"><h2>${esc(title)}</h2>
+    ${count != null ? `<span class="count">·${count}</span>` : ''}
+    ${note ? `<span class="sec-note">${esc(note)}</span>` : ''}</div>
+    <div class="sec-body"></div></section>`);
+  document.getElementById('main').appendChild(s);
+  return s.querySelector('.sec-body');
+}
+function unavailable(host, reason){
+  host.appendChild($(`<div class="empty missing">unavailable — ${esc(reason)}</div>`));
+}
+function empty(host, msg){
+  host.appendChild($(`<div class="empty">${esc(msg)}</div>`));
+}
+function prov(parts){
+  return `<div class="prov">${parts.filter(Boolean).map((p,i)=>
+    (i?'<span class="sep">·</span>':'')+`<span>${esc(p)}</span>`).join('')}</div>`;
+}
+
+/* ── 1 · TODAY ── */
+(function today(){
+  const t = D.today || {};
+  const host = section('today', 'Today', null, t.date_human || '');
+  let any = false;
+
+  (t.conflicts || []).forEach(c => { any = true;
+    host.appendChild($(`<div class="card bad"><div class="card-top">
+      <span class="tag bad">conflict</span>
+      <span class="card-title">${esc(c.a)} overlaps ${esc(c.b)}</span></div>
+      <div class="card-body">Flagged, not resolved — moving a meeting is yours to do.</div>
+      ${prov(['calendar', c.when])}</div>`));
+  });
+
+  (t.due || []).forEach(d => { any = true;
+    host.appendChild($(`<div class="card ${d.overdue ? 'bad' : 'sig'}"><div class="card-top">
+      <span class="tag ${d.overdue ? 'bad' : 'sig'}">${d.overdue ? 'overdue' : 'due'}</span>
+      <span class="card-title">${esc(d.title)}</span>
+      ${d.amount ? `<span class="money">${esc(d.amount)}</span>` : ''}</div>
+      ${d.detail ? `<div class="card-body">${esc(d.detail)}</div>` : ''}
+      ${prov([d.source, d.id, d.due_human])}</div>`));
+  });
+
+  const cal = t.calendar || {};
+  if (!cal.available) unavailable(host, cal.reason || 'calendar not read');
+  else (cal.items || []).forEach(e => { any = true;
+    host.appendChild($(`<div class="card"><div class="card-top">
+      <span class="tag">${esc(e.calendar)}</span>
+      <span class="card-title">${esc(e.title)}</span></div>
+      ${prov(['calendar', e.start])}</div>`));
+  });
+
+  (t.meetings || []).forEach(m => { any = true;
+    host.appendChild($(`<div class="card"><div class="card-top">
+      <span class="tag">granola</span><span class="card-title">${esc(m.title)}</span></div>
+      ${prov(['granola', m.date])}</div>`));
+  });
+
+  // "nothing to do" and "I couldn't look" are different answers. Only claim the
+  // first when the calendar actually answered.
+  if (!any) {
+    empty(host, cal.available
+      ? 'Nothing scheduled and nothing due. The calendar answered — it is genuinely empty.'
+      : 'Nothing due from Linear or Granola. The calendar was not read, so this is not a complete picture of today.');
+  }
+})();
+
+/* ── 2 · NEEDS ME (hard cap 10) ── */
+(function needsMe(){
+  const n = D.needs_me || {};
+  const host = section('needs-me', 'Needs me', (n.items||[]).length + (n.overflow||0),
+    n.overflow ? `showing 10 · ${n.overflow} more held back` : '');
+  if (!n.items || !n.items.length) { empty(host, 'Clear. Nothing is waiting on you.'); return; }
+  n.items.forEach(i => {
+    host.appendChild($(`<div class="card ${i.severity === 'high' ? 'bad' : 'sig'}"><div class="card-top">
+      ${i.label ? `<span class="tag ${i.severity === 'high' ? 'bad' : 'sig'}">${esc(i.label)}</span>` : ''}
+      <span class="card-title">${esc(i.text)}</span>
+      ${i.amount ? `<span class="money">${esc(i.amount)}</span>` : ''}</div>
+      ${i.detail ? `<div class="card-body">${esc(i.detail)}</div>` : ''}
+      ${prov([i.source, i.age])}</div>`));
+  });
+})();
+
+/* ── 3 · PROJECTS (memory/projects.md is the only source) ── */
+(function projects(){
+  const p = D.projects || {};
+  const host = section('projects', 'Projects', (p.items||[]).length);
+  const head = document.querySelector('#projects .sec-head');
+
+  if (!p.available) { unavailable(host, p.reason || 'memory/projects.md not readable'); return; }
+  if (!p.items.length) {
+    empty(host, 'No approved projects yet. Projects enter this list only by your explicit sign-off — see PROJECT_LIST_PROPOSAL.md.');
+    return;
+  }
+
+  const filters = $(`<div class="filters" role="group" aria-label="Filter projects">
+    <button data-f="all" aria-pressed="true">all</button>
+    <button data-f="blocked" aria-pressed="false">blocked</button>
+    <button data-f="stale" aria-pressed="false">stale</button>
+  </div>`);
+  head.appendChild(filters);
+
+  const grid = $(`<div class="proj-grid"></div>`);
+  host.appendChild(grid);
+
+  function draw(f){
+    grid.innerHTML = '';
+    const list = p.items.filter(x =>
+      f === 'all' ? true : f === 'blocked' ? x.blocked : x.stale);
+    if (!list.length) { grid.appendChild($(`<div class="empty">Nothing ${esc(f)}.</div>`)); return; }
+    list.forEach(x => {
+      if (x.malformed) {
+        grid.appendChild($(`<div class="card bad"><div class="card-top">
+          <span class="tag bad">malformed</span><span class="card-title">${esc(x.name)}</span></div>
+          <div class="card-body">Kept verbatim rather than dropped. Fix the entry in memory/projects.md.</div>
+          ${prov(['memory/projects.md'])}</div>`));
+        return;
+      }
+      const cls = x.blocked ? 'bad' : x.stale ? 'sig' : '';
+      grid.appendChild($(`<div class="card ${cls}"><div class="card-top">
+        <span class="card-title">${esc(x.name)}</span>
+        ${x.blocked ? `<span class="tag bad">blocked</span>` : ''}
+        ${x.stale ? `<span class="tag sig">${x.days_stale}d stale</span>` : ''}</div>
+        <div class="card-body">${esc(x.status || '—')}</div>
+        <div class="card-body next ${x.next_action ? '' : 'none'}">
+          next: ${esc(x.next_action || 'not set')}</div>
+        ${x.blocked ? `<div class="card-body">blocked by: ${esc(x.blocked_by)}</div>` : ''}
+        ${prov(['memory/projects.md', x.last_movement ? 'moved ' + x.last_movement : 'no movement recorded'])}</div>`));
+    });
+  }
+
+  const KEY = 'cc.projects.filter';
+  let active = 'all';
+  try { active = localStorage.getItem(KEY) || 'all'; } catch (e) {}
+  if (!['all','blocked','stale'].includes(active)) active = 'all';
+
+  filters.querySelectorAll('button').forEach(b => {
+    b.setAttribute('aria-pressed', String(b.dataset.f === active));
+    b.addEventListener('click', () => {
+      active = b.dataset.f;
+      try { localStorage.setItem(KEY, active); } catch (e) {}
+      filters.querySelectorAll('button').forEach(o =>
+        o.setAttribute('aria-pressed', String(o.dataset.f === active)));
+      draw(active);
+    });
+  });
+  draw(active);
+})();
+
+/* ── 4 · IN FLIGHT ── */
+(function inFlight(){
+  const f = D.in_flight || {};
+  const hb = f.heartbeat || {};
+  const au = f.automation || {};
+  const host = section('in-flight', 'In flight', null,
+    au.available ? `${au.total} tool calls · last ${au.window_hours}h` : '');
+
+  if (!hb.available) unavailable(host, hb.reason);
+  else {
+    const grid = $(`<div class="hb"></div>`);
+    hb.tasks.forEach(t => {
+      const v = t.never_run ? 'NEVER RUN'
+        : t.missed ? `${Math.round(t.age_hours)}h — past ${t.max_age_hours}h limit`
+        : `${Math.round(t.age_hours)}h ago`;
+      grid.appendChild($(`<div class="hb-item ${t.missed ? 'miss' : ''}">
+        <span class="n">${esc(t.name)}</span><span class="v">${esc(v)}</span></div>`));
+    });
+    host.appendChild(grid);
+  }
+
+  if (!au.available) { unavailable(host, au.reason); return; }
+  if (!au.recent.length) { empty(host, `No tool calls in the last ${au.window_hours}h.`); return; }
+  const log = $(`<div class="log"></div>`);
+  au.recent.forEach(r => {
+    log.appendChild($(`<div><span class="t">${esc((r.ts||'').slice(11,16))}</span>
+      <span class="k">${esc(r.tool)}</span>
+      <span class="g">${esc(r.target)}</span></div>`));
+  });
+  host.appendChild(log);
+})();
+
+/* ── 5 · LOOSE ENDS ── */
+(function looseEnds(){
+  const l = D.loose_ends || {};
+  const host = section('loose-ends', 'Loose ends', (l.items||[]).length);
+  if (!l.available) { unavailable(host, l.reason || 'not collected'); return; }
+  if (!l.items.length) { empty(host, 'Nothing found that was promised and never tracked.'); return; }
+  l.items.forEach(i => {
+    host.appendChild($(`<div class="card"><div class="card-top">
+      <span class="tag">${esc(i.source)}</span>
+      <span class="card-title">${esc(i.text)}</span></div>
+      ${i.detail ? `<div class="card-body">${esc(i.detail)}</div>` : ''}
+      ${prov([i.source, i.date])}</div>`));
+  });
+})();
+
+document.getElementById('main').appendChild(
+  $(`<footer>Six actions are never automatic: sending · deleting · spending ·
+     filing outside the taxonomy · credentials · meetings.
+     Rebuild with <b>/dashboard</b>.</footer>`));
+</script>
+</body>
+</html>

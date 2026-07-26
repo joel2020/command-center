@@ -154,7 +154,9 @@ def render(projects):
                 continue
             out.append(f"### {p.name}")
             for f in FIELDS:
-                out.append(f"- {f}: {p.fields.get(f, '')}")
+                # rstrip so an empty field renders as "- status:" not "- status: ",
+                # which keeps `raw` byte-stable across a round trip.
+                out.append(f"- {f}: {p.fields.get(f, '')}".rstrip())
             out.append("")
     return "\n".join(out).rstrip() + "\n"
 
