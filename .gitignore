@@ -1,0 +1,3 @@
+state/automation-log.jsonl
+dashboard/*.cache
+.DS_Store

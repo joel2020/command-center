@@ -1,0 +1,21 @@
+{
+  "_comment": "Each scheduled task writes last_run here on completion. SessionStart flags anything past max_age_hours.",
+  "tasks": {
+    "morning-brief": {
+      "last_run": null,
+      "max_age_hours": 26
+    },
+    "email-triage": {
+      "last_run": null,
+      "max_age_hours": 2
+    },
+    "evening-digest": {
+      "last_run": null,
+      "max_age_hours": 26
+    },
+    "weekly-review": {
+      "last_run": null,
+      "max_age_hours": 176
+    }
+  }
+}
