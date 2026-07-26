@@ -1,4 +1,12 @@
 {
+  "permissions": {
+    "defaultMode": "auto",
+    "deny": [
+      "Bash(rm -rf *)",
+      "Bash(sudo *)",
+      "Bash(git push --force*)"
+    ]
+  },
   "hooks": {
     "PreToolUse": [
       {
