@@ -90,6 +90,20 @@ import sys;sys.path.insert(0,'.claude/lib');import triage
 k=triage.load_known_senders(); k.update({'someone@example.com'}); triage.save_known_senders(k)"
 ```
 
+## 5b. Record what was filed away
+
+Metric 2 in the Sunday review — "how many NOISE/FYI items did Joel dig back out?"
+— needs a denominator. Log every thread this run archived:
+
+```bash
+python3 -c "
+import sys;sys.path.insert(0,'.claude/lib');import outcomes
+outcomes.record_archived(['<thread-id>','<thread-id>'], 'NOISE')"
+```
+
+In the label-only window nothing is archived, so log nothing. Labeling is not
+filing away, and recording it as such would fabricate the denominator.
+
 ## 6. Stamp
 
 ```bash

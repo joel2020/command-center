@@ -77,6 +77,16 @@
   .count{font-family:var(--mono);font-size:.72rem;color:var(--dim)}
   .sec-note{margin-left:auto;font-family:var(--mono);font-size:.7rem;color:var(--dim)}
 
+  /* the section's own scorecard — how much of what it showed got resolved */
+  .meter{font-size:.78rem;padding:.45rem .6rem;margin-bottom:.5rem;border-radius:4px;
+    border:1px solid var(--rule);color:var(--dim);background:var(--panel-2)}
+  .meter b{color:var(--ink);font-family:var(--mono)}
+  .meter .g{display:block;margin-top:.15rem;font-family:var(--mono);
+    font-size:.68rem;color:var(--dimmer)}
+  .meter.miss{border-color:var(--alarm);color:var(--alarm)}
+  .meter.miss b{color:var(--alarm)}
+  .meter.miss .g{color:var(--alarm);opacity:.75}
+
   /* ─── cards ──────────────────────────────────────────────────── */
   .card{
     background:var(--panel);
@@ -286,10 +296,27 @@ function prov(parts){
   const n = D.needs_me || {};
   const host = section('needs-me', 'Needs me', (n.items||[]).length + (n.overflow||0),
     n.overflow ? `showing 10 · ${n.overflow} more held back` : '');
+  // This section grades itself. PHASES.md: under 50% cleared means the bar is
+  // too low, and the fix is to surface less — not to make the list longer.
+  const o = D.outcomes || {};
+  if (o.clear_rate === null || o.clear_rate === undefined) {
+    host.appendChild($(`<div class="meter">No outcome data yet — the ${esc(String(o.window_days || 7))}-day
+      window is still filling. Rate withheld rather than reported as zero.</div>`));
+  } else {
+    const pct = Math.round(o.clear_rate * 100);
+    host.appendChild($(`<div class="meter ${o.over_surfacing ? 'miss' : ''}">
+      <b>${pct}%</b> of what this section surfaced in the last ${esc(String(o.window_days))} days
+      was resolved${o.over_surfacing ? ' — under 50%, so this section is over-surfacing' : ''}.
+      <span class="g">${esc(String(o.surfaced))} surfaced ·
+      ${esc(String(o.cleared))} cleared · ${esc(String(o.still_open_past_threshold))} left open</span></div>`));
+  }
+
   if (!n.items || !n.items.length) { empty(host, 'Clear. Nothing is waiting on you.'); return; }
+  const sev = i => i.severity === 'security' ? 'bad' : i.severity === 'high' ? 'bad' : 'sig';
   n.items.forEach(i => {
-    host.appendChild($(`<div class="card ${i.severity === 'high' ? 'bad' : 'sig'}"><div class="card-top">
-      ${i.label ? `<span class="tag ${i.severity === 'high' ? 'bad' : 'sig'}">${esc(i.label)}</span>` : ''}
+    host.appendChild($(`<div class="card ${sev(i)}"><div class="card-top">
+      ${i.label ? `<span class="tag ${sev(i)}">${esc(i.label)}</span>` : ''}
+      ${i.severity === 'security' ? `<span class="tag bad">security</span>` : ''}
       <span class="card-title">${esc(i.text)}</span>
       ${i.amount ? `<span class="money">${esc(i.amount)}</span>` : ''}</div>
       ${i.detail ? `<div class="card-body">${esc(i.detail)}</div>` : ''}

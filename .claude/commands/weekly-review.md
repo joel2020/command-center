@@ -10,10 +10,48 @@ Report all five every week, per PHASES.md. Say the number even when it's bad —
 especially when it's bad.
 
 **1. Of NEEDS ME items, what % did Joel act on?**
+```bash
+python3 -c "
+import sys,json;sys.path.insert(0,'.claude/lib');import outcomes
+print(json.dumps(outcomes.needs_me_metrics(days=7), indent=2))"
+```
 Below 50% means over-surfacing. The fix is a higher bar, not a longer list.
 
+`clear_rate` is **resolution, not proof of action** — an item stops being surfaced
+when its underlying condition changes. Report it as what it is. If `clear_rate` is
+`null` there was no data this week; say that instead of reporting zero, because a
+rate of zero means "you ignored everything" and an empty week does not.
+
+Then walk the open list with Joel and record real verdicts, which outrank the
+inferred ones:
+```bash
+python3 -c "
+import sys;sys.path.insert(0,'.claude/lib');import outcomes
+for r in outcomes.open_items(): print(r['key'], '|', r['ts'][:10], '|', r['text'][:70])"
+```
+```bash
+python3 -c "
+import sys;sys.path.insert(0,'.claude/lib');import outcomes
+outcomes.mark('<key>', 'acted')"   # acted | ignored | not-mine
+```
+
 **2. Of NOISE/FYI items, how many did Joel later dig out of the archive?**
-Above zero is a miss. Each one is a correction owed to `memory/email-rules.md`.
+
+`/triage` records what it archives. Ask Gmail what came back — anything labeled by
+triage that is now starred, unread-again, or back in the inbox:
+```
+search_threads  query: "(label:CC/Noise OR label:CC/FYI) (in:inbox OR is:starred)"
+```
+Feed the thread ids back in, then read the metric:
+```bash
+python3 -c "
+import sys,json;sys.path.insert(0,'.claude/lib');import outcomes
+outcomes.record_recovered(['<thread-id>'])
+print(json.dumps(outcomes.archive_recovery_metrics(days=7), indent=2))"
+```
+Above zero is a miss. Each one is a correction owed to `memory/email-rules.md` —
+and each is also a candidate for the fixture in
+`.claude/lib/tests/fixtures/`, so the same mistake fails a test next time.
 
 **3. Queue: approved vs declined vs expired.**
 ```bash
@@ -27,10 +65,20 @@ proposer, not with Joel.
 **4. Projects stale 7+ days.**
 ```bash
 python3 -c "
-import sys;sys.path.insert(0,'.claude/lib');import projects,feed
-for p in projects.load(feed.PROJECTS_MD):
-    if p.section=='Active' and p.is_stale(): print(p.name, p.days_stale(),'days')"
+import sys,json,datetime;sys.path.insert(0,'.claude/lib')
+import projects,feed,movement
+ps=projects.load(feed.PROJECTS_MD)
+fd=feed.load_feed(); issues=(fd.get('data',{}).get('linear') or {}).get('issues',[])
+mv=movement.derive_all(ps,issues)
+for p in ps:
+    if p.section!='Active': continue
+    d=p.to_dict(movement=mv.get(p.name))
+    if d['stale']: print(f\"{d['name']} — {d['days_stale']}d ({d['movement_source']})\")"
 ```
+Check the source on each. `declared` means the date is Joel's note with nothing
+corroborating it, so the staleness may be bookkeeping rather than reality — those
+are worth asking about directly. `confirmed by` or `observed via` means a repo or
+tracker agrees, and the project really has not moved.
 
 **5. Push notifications sent, and how many were justified in hindsight.**
 ```bash

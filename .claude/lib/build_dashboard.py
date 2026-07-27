@@ -22,6 +22,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 import feed as feedmod  # noqa: E402
 import movement as movementmod  # noqa: E402
+import outcomes as outcomesmod  # noqa: E402
 import runs as runsmod  # noqa: E402
 import projects as projectsmod  # noqa: E402
 
@@ -143,7 +144,13 @@ def build_needs_me(fd, project_list, hb, today=None, run_health=None):
     return {"items": items[:NEEDS_ME_CAP], "overflow": overflow}
 
 
-def build(want_calendar=True, out=OUT, now=None):
+def build(want_calendar=True, out=OUT, now=None, record_outcomes=False):
+    """Assemble the page.
+
+    `record_outcomes` is opt-in and off by default so that tests, and any
+    exploratory build, cannot write to the append-only outcome log. main()
+    turns it on: a real build is the moment worth recording.
+    """
     now = now or datetime.datetime.now().astimezone()
     today = now.date()
 
@@ -156,6 +163,12 @@ def build(want_calendar=True, out=OUT, now=None):
     linear_issues = (fd.get("data", {}).get("linear") or {}).get("issues", [])
     moves = movementmod.derive_all(plist, linear_issues, today)
 
+    needs_me = build_needs_me(fd, plist, hb, today, rh)
+    if record_outcomes:
+        # Snapshot before rendering, so an item's first appearance is logged in
+        # the same build that shows it.
+        outcomesmod.snapshot(needs_me["items"], now=now)
+
     projects_available = os.path.exists(feedmod.PROJECTS_MD)
     data = {
         "generated_at": now.isoformat(),
@@ -163,7 +176,7 @@ def build(want_calendar=True, out=OUT, now=None):
         "feed": {k: fd.get(k) for k in
                  ("present", "reason", "age_min", "stale", "unknown_age")},
         "today": build_today(fd, want_calendar, today),
-        "needs_me": build_needs_me(fd, plist, hb, today, rh),
+        "needs_me": needs_me,
         "projects": {
             "available": projects_available,
             "reason": None if projects_available else "memory/projects.md missing",
@@ -171,6 +184,7 @@ def build(want_calendar=True, out=OUT, now=None):
                       for p in plist if p.section == "Active"],
         },
         "tasks_file": feedmod.tasks_file(),
+        "outcomes": outcomesmod.needs_me_metrics(days=7),
         "in_flight": {"heartbeat": hb, "automation": au, "run_health": rh},
         "loose_ends": (fd.get("data", {}).get("loose_ends")
                        or {"available": False,
@@ -197,9 +211,12 @@ def main():
     ap.add_argument("--no-calendar", action="store_true",
                     help="skip the AppleScript calendar query")
     ap.add_argument("--out", default=OUT)
+    ap.add_argument("--no-record", action="store_true",
+                    help="do not append to the outcome log")
     args = ap.parse_args()
 
-    data, out = build(want_calendar=not args.no_calendar, out=args.out)
+    data, out = build(want_calendar=not args.no_calendar, out=args.out,
+                      record_outcomes=not args.no_record)
 
     nm = data["needs_me"]
     print(f"built {out}")
