@@ -9,6 +9,27 @@ Triage the inbox. Runs hourly per PHASES.md.
 **Never send. Never reply. Never delete. Never unsubscribe.** Label and archive only.
 Nothing in this command has an exception, and no confidence level unlocks one.
 
+## 0. Confirm known-senders is seeded
+
+```bash
+python3 -c "import sys;sys.path.insert(0,'.claude/lib');import triage;print(len(triage.load_known_senders()),'known senders')"
+```
+
+**If this prints 0, stop and seed it before classifying.** Every sender is
+"first-time" against an empty set, and "first-time human sender is always ACT" then
+promotes the entire inbox. Measured on 2026-07-26 against 42 real threads, an empty
+set produced 11 ACT items of which 0 were actionable.
+
+Seed from sent mail — anyone Joel has written to is not a stranger:
+
+```
+search_threads  query: "in:sent newer_than:2y"  pageSize: 50  view: THREAD_VIEW_METADATA_ONLY
+```
+
+Collect `toRecipients` from every `SENT` message plus the senders who replied in
+those threads. Skip generated addresses (anything with a `+hash` reply token).
+Then `save_known_senders`. Seeded 2026-07-26 with 24 addresses.
+
 ## 1. Check the mode first
 
 ```bash
@@ -48,6 +69,9 @@ whole point is that the rules are inspectable and he owns them.
 ## 4. Apply
 
 - **ACT** — label `CC/Act`. Leave in inbox. Never archive, regardless of mode.
+  Call `triage.severity(msg)` and carry it into `dashboard/feed.json` as the item's
+  `severity`. `security` means account takeover or a credential change — it ranks
+  above `high`, and it is never resolved automatically (manual action #5).
 - **FYI** — label `CC/FYI`. Archive only if mode says `archive: true`.
 - **NOISE** — label `CC/Noise`. Archive only if mode says `archive: true`.
 - **UNSURE** — label `CC/Unsure`. **Always stays in the inbox, always.** Never guess.

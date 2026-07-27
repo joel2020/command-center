@@ -37,6 +37,9 @@ BULK_LOCAL = [
     "noreply", "no-reply", "donotreply", "do-not-reply", "notifications",
     "notification", "updates", "newsletter", "mailer", "bounce", "alerts",
     "alert", "info", "hello", "team", "support", "marketing", "news",
+    # `email@e.upgrade.com`, `email@savings.lendingtree.com`. Nobody is named
+    # email@ either, and both of these were reaching ACT as first-time humans.
+    "email", "mail", "inspiration", "digest", "reply", "invite", "invites",
     # Role addresses. Nobody is named admin@ — treating these as first-time humans
     # promoted every SaaS announcement to ACT.
     "admin", "billing", "sales", "contact", "help", "service", "services",
@@ -50,30 +53,87 @@ BULK_DOMAIN_HINTS = [
     "skool.com", "beehiiv.com", "substack.com", "mailchimp", "sendgrid.net",
     "tiktok.com", "ebay.com", "equifax.com", "creditsesame.com", "kalshi.com",
     "newsletter", "refer.io", "icims.com",
+    # Send-only platforms: a domain that exists to deliver marketing, where the
+    # local part is a brand name rather than a person. Structural rules below
+    # cannot catch these because there is nothing structural to catch.
+    "safeopt.com", "lensa.com", "wellfound.com", "polymarket.com",
 ]
 
-# Bulk-mail subdomain prefixes: `e.equifax.com`, `mail.beehiiv.com`, `tm.openai.com`.
-# Matched against the FIRST domain label only — as a substring these would match
-# far too much (an earlier version matched "e." inside "example.com" and filed
-# every human at that domain as noise).
-BULK_SUBDOMAINS = {
-    "e", "em", "mail", "email", "mailer", "news", "newsletter", "alert", "alerts",
-    "notify", "notifications", "updates", "info", "reply", "mkt", "marketing",
-    "link", "click", "go", "tm", "t", "account", "accounts", "hey",
+# Subdomain labels that mean "this is the mail arm of a domain". Compared as
+# whole tokens against each label to the LEFT of the registrable domain, after
+# splitting on - and _ — so `us-news.comms.adidas.com` yields {us, news, comms}
+# and matches on `news`, while `example.com` yields {example} and matches
+# nothing. An earlier version substring-matched the whole domain and filed
+# every human at example.com as noise, because "e." appears inside it.
+BULK_SUBDOMAIN_TOKENS = {
+    "e", "em", "m", "mail", "email", "mailer", "news", "newsletter", "letter",
+    "alert", "alerts", "notify", "notifications", "updates", "info", "reply",
+    "mkt", "marketing", "promo", "promos", "offers", "savings", "deals",
+    "link", "click", "go", "tm", "t", "account", "accounts", "hey", "learn",
+    "comms", "send", "sender", "delivery", "campaign", "campaigns", "cmail",
+}
+
+# Two-part public suffixes, so the registrable name of `sura.com.co` is `sura`
+# and not `com`. Not exhaustive — just the ones that show up in Joel's mail.
+MULTIPART_SUFFIXES = {
+    "com.co", "com.mx", "com.br", "com.ar", "com.au", "co.uk", "org.uk",
+    "co.jp", "co.kr", "com.tr", "com.sg", "co.in", "com.pe", "cl.co",
 }
 
 # Money / legal / deadline language — pushes toward ACT.
+#
+# Matched as whole words (see _hits), which is why "payment" is not here on its
+# own: it matched "Get ahead of your monthly payments" from a loan advertiser.
+# Bare "agreement" is gone for the same reason — it matched a gym's "copy of
+# your agreement for your records". Actionable money says WHICH action.
 ACT_TERMS = [
-    "invoice", "payment", "past due", "overdue", "wire", "deposit", "refund",
-    "contract", "agreement", "signature", "sign ", "docusign", "signnow",
-    "deadline", "expire", "expires", "expiring", "urgent", "final notice", "suspend",
-    "terminated", "quota", "unable to send", "action required", "verify your",
+    "invoice", "past due", "overdue", "payment due", "payment failed",
+    "payment declined", "wire", "deposit", "refund", "outstanding balance",
+    "amount due", "signature", "signature request", "please sign", "docusign",
+    "signnow", "countersign", "deadline", "expire", "expires", "expiring",
+    "urgent", "final notice", "suspend", "suspended", "terminated", "quota",
+    "unable to send", "action required", "verify your", "respond by",
+    "awaiting your", "needs your approval", "last chance to",
+    # Appointments are commitments. Calendar.app holds only holidays, so
+    # confirmation email is Joel's real calendar — see the Optic Gold thread.
+    "appointment", "you are scheduled", "mark your calendar", "reschedule",
+]
+
+# Regex-shaped ACT signals that a word list cannot express.
+ACT_PATTERNS = [
+    # "storage is 87% full", "97% of your quota". The Google One warning said
+    # neither "quota" nor "unable to send" and was filed NOISE.
+    (r"\b\d{1,3}\s*%\s*(?:full|used|of your)", "storage or quota threshold"),
+    (r"\b(?:run(?:ning)? )?out of storage\b", "out of storage"),
+    (r"\bstorage is (?:almost )?full\b", "storage full"),
+    # A date plus a time, in a message short enough to be a booking.
+    (r"\b(?:on |for )?(?:mon|tue|wed|thu|fri|sat|sun)[a-z]*,?\s+\d{1,2}[/ ]",
+     "day-and-date booking"),
+]
+
+# Account-takeover and credential-change language. Checked BEFORE the FYI list,
+# because "confirmation" is an FYI word and "Your Apple account confirmation
+# request was confirmed ... from Baghdad Iraq" is not an FYI message. Credential
+# changes are manual action #5; the system never resolves these, only escalates.
+SECURITY_TERMS = [
+    "if this was not you", "if this wasn't you", "if you did not", "if it wasn't you",
+    "was confirmed on an", "unrecognized device", "unfamiliar device",
+    "new device signed in", "unusual activity", "suspicious activity",
+    "suspicious sign-in", "password was changed", "password was reset",
+    "recovery email was changed", "recovery phone was changed",
+    "two-factor was disabled", "2-step verification was", "someone else has your",
+    "your account was accessed",
 ]
 
 # Real information, no action needed.
 FYI_TERMS = [
     "receipt", "confirmation", "confirmed", "shipped", "delivered", "statement",
-    "report", "summary", "digest", "recap", "security alert", "new sign-in",
+    "report", "summary", "security alert", "new sign-in",
+    "for your records", "welcome to", "you shared", "sign in to",
+    # "digest" and "recap" were here and promoted every Skool community digest
+    # out of NOISE. They describe a message's shape, not whether it informs.
+    # Spanish-language document delivery — SURA sends electronic credit notes.
+    "nota credito", "nota de credito", "factura", "comprobante",
 ]
 
 
@@ -174,21 +234,101 @@ def _domain(sender):
     return a.split("@")[-1] if "@" in a else ""
 
 
+def _registrable(domain):
+    """Split a domain into (subdomain_labels, registrable_name).
+
+    `us-news.comms.adidas.com` -> (['us-news', 'comms'], 'adidas')
+    `sura.com.co`              -> ([], 'sura')
+    `patrickdang.com`          -> ([], 'patrickdang')
+    """
+    labels = [l for l in (domain or "").split(".") if l]
+    if len(labels) < 2:
+        return [], (labels[0] if labels else "")
+    suffix_len = 2 if ".".join(labels[-2:]) in MULTIPART_SUFFIXES else 1
+    name_idx = len(labels) - suffix_len - 1
+    if name_idx < 0:
+        return [], labels[0]
+    return labels[:name_idx], labels[name_idx]
+
+
+def _tokens(label):
+    return {t for t in re.split(r"[-_]+", label) if t}
+
+
 def looks_like_bulk(sender):
     a = _addr(sender)
     local = a.split("@")[0] if "@" in a else a
     domain = _domain(sender)
+
     if any(b in local for b in BULK_LOCAL):
         return True
     if any(h in domain for h in BULK_DOMAIN_HINTS):
         return True
-    labels = domain.split(".")
-    if len(labels) > 2 and labels[0] in BULK_SUBDOMAINS:
+
+    subs, name = _registrable(domain)
+
+    # The mail arm of a domain: any subdomain label that is bulk-mail machinery.
+    for label in subs:
+        if _tokens(label) & BULK_SUBDOMAIN_TOKENS:
+            return True
+        # Generated sending shards: mp1, e2, s3, m10.
+        if re.fullmatch(r"[a-z]{0,3}\d{1,3}", label):
+            return True
+
+    # A brand mailing as itself: adidas@...adidas.com, ebay@ebay.com,
+    # Coursera@m.learn.coursera.org, suracomunicaciones@sura.com.co.
+    #
+    # Guarded two ways so it cannot swallow humans. A dot in the local part
+    # means a person's name (sura.rodriguez@sura.com.co stays human), and the
+    # registrable name must be long enough that the containment is meaningful —
+    # otherwise `jason@rltrs.co` would match on a three-letter company.
+    if name and len(name) >= 4 and "." not in local and name in local:
         return True
+
     # A local part with a long digit run is almost always a generated bulk address.
     if re.search(r"\d{6,}", local):
         return True
     return False
+
+
+def _hits(terms, blob):
+    """Whole-word matches only.
+
+    Substring matching is why "sign " matched "Sign in with Google" and promoted
+    a routine OAuth notice to ACT. Terms containing spaces are matched as
+    phrases with boundaries at each end.
+    """
+    out = []
+    for t in terms:
+        if re.search(r"(?<!\w)" + re.escape(t) + r"(?!\w)", blob):
+            out.append(t)
+    return out
+
+
+def _pattern_hits(blob):
+    return [why for rx, why in ACT_PATTERNS if re.search(rx, blob)]
+
+
+def severity(msg):
+    """How loudly an ACT item should land. 'security' outranks 'high'.
+
+    Kept separate from the bucket so the dashboard can rank within ACT without
+    the classifier needing a fifth bucket.
+    """
+    blob = " ".join([
+        (msg.get("sender") or "").lower(),
+        (msg.get("subject") or "").lower(),
+        (msg.get("snippet") or "").lower(),
+    ])
+    if _hits(SECURITY_TERMS, blob):
+        return "security"
+    money_or_legal = _hits(["invoice", "past due", "overdue", "payment due",
+                            "wire", "deposit", "refund", "amount due",
+                            "final notice", "suspend", "suspended", "terminated",
+                            "deadline", "signature request"], blob)
+    if money_or_legal:
+        return "high"
+    return "normal"
 
 
 def classify(msg, rules=None, known_senders=None):
@@ -213,15 +353,29 @@ def classify(msg, rules=None, known_senders=None):
         if term in blob:
             return ACT, f"always-ACT term: {term}"
 
+    # 2b — account takeover and credential changes.
+    #
+    # Above every other heuristic and above the bulk check, because these
+    # arrive from noreply@ addresses and use vocabulary that reads as FYI.
+    # "Your Apple account confirmation request was confirmed on an iPhone 16
+    # from the location of Baghdad Iraq" was filed FYI on the word
+    # "confirmation" — the one message in the inbox that could not wait.
+    sec_hits = _hits(SECURITY_TERMS, blob)
+    if sec_hits:
+        return ACT, f"security: {sec_hits[0]}"
+
     bulk = looks_like_bulk(sender)
 
     # A human who has never written before is always ACT (email-rules.md).
+    # Only as trustworthy as `known` is complete — an empty known-senders set
+    # makes every sender first-time, which is how eleven newsletters reached
+    # ACT. Seed it from sent mail; see save_known_senders.
     if not bulk and addr and addr not in known:
         return ACT, "first-time human sender"
 
     # 3 — heuristics
-    act_hits = [t for t in ACT_TERMS if t in blob]
-    fyi_hits = [t for t in FYI_TERMS if t in blob]
+    act_hits = _hits(ACT_TERMS, blob) + _pattern_hits(blob)
+    fyi_hits = _hits(FYI_TERMS, blob)
 
     if bulk:
         # Bulk mail can still be genuinely actionable — a quota cutoff or an
