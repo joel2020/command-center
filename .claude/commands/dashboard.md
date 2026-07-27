@@ -12,8 +12,13 @@ If a connector fails, record it as unavailable **with the reason** — never as 
 - **Gmail** — `search_threads` with `in:inbox newer_than:7d`, up to 50.
   Classify each thread per `memory/email-rules.md` into ACT / FYI / NOISE / UNSURE.
   Only ACT items go in `gmail.act`. Do not label or archive here — that's `/triage`.
-- **Linear** — `list_issues` ordered by `updatedAt`, limit 50. Keep everything whose
-  `statusType` is not `completed`, plus anything with a `dueDate` in the next 7 days.
+- **Linear** — `list_issues` ordered by `updatedAt`, **limit 250**. Keep everything
+  whose `statusType` is not `completed` or `canceled`, plus anything with a `dueDate`
+  in the next 7 days. Check `hasNextPage` and page until it is false — at limit 50
+  the workspace came back truncated (126 issues exist, 64 of them open) and the
+  missing ones were silently invisible.
+  Carry `updatedAt` through: `movement.py` uses it to date projects that declare a
+  `- linear:` source, and without it derivation reports "couldn't read".
 - **Granola** — `list_meetings` for `this_week`. Titles only; don't fetch transcripts.
 - **Loose ends** — commitments visible in the Gmail threads and Granola titles that
   don't appear in Linear or `memory/projects.md`. Something Joel said he'd do that
@@ -25,7 +30,7 @@ Write `dashboard/feed.json`:
 {
   "generated_at": "<ISO 8601 with offset>",
   "gmail":   {"available": true, "act": [{"subject","sender","date","severity"}]},
-  "linear":  {"available": true, "issues": [{"id","title","status","statusType","project","dueDate","url"}]},
+  "linear":  {"available": true, "issues": [{"id","title","status","statusType","project","dueDate","url","updatedAt"}]},
   "granola": {"available": true, "meetings": [{"id","title","date"}]},
   "loose_ends": {"available": true, "items": [{"text","source","date","detail"}]}
 }

@@ -261,12 +261,23 @@ function prov(parts){
       ${prov(['granola', m.date])}</div>`));
   });
 
+  // ~/TASKS.md. PHASES.md lists it as a Phase 1 data source and for a long time
+  // nothing read it — it was not parsed AND not reported missing, which is the
+  // one thing this page is not allowed to do.
+  const tf = D.tasks_file || {};
+  if (!tf.available) unavailable(host, tf.reason || '~/TASKS.md not read');
+  else (tf.items || []).forEach(i => { any = true;
+    host.appendChild($(`<div class="card"><div class="card-top">
+      <span class="tag">tasks</span><span class="card-title">${esc(i.text)}</span></div>
+      ${prov(['~/TASKS.md'])}</div>`));
+  });
+
   // "nothing to do" and "I couldn't look" are different answers. Only claim the
-  // first when the calendar actually answered.
+  // first when every source actually answered.
   if (!any) {
-    empty(host, cal.available
-      ? 'Nothing scheduled and nothing due. The calendar answered — it is genuinely empty.'
-      : 'Nothing due from Linear or Granola. The calendar was not read, so this is not a complete picture of today.');
+    empty(host, (cal.available && tf.available)
+      ? 'Nothing scheduled and nothing due. Every source answered — today is genuinely empty.'
+      : 'Nothing due from the sources that answered. At least one was not read, so this is not a complete picture of today.');
   }
 })();
 
@@ -330,7 +341,15 @@ function prov(parts){
         <div class="card-body next ${x.next_action ? '' : 'none'}">
           next: ${esc(x.next_action || 'not set')}</div>
         ${x.blocked ? `<div class="card-body">blocked by: ${esc(x.blocked_by)}</div>` : ''}
-        ${prov(['memory/projects.md', x.last_movement ? 'moved ' + x.last_movement : 'no movement recorded'])}</div>`));
+        ${prov(['memory/projects.md',
+                x.last_movement ? 'moved ' + x.last_movement : 'no movement recorded',
+                // Say whether the date was observed or taken on trust. "declared"
+                // means a hand-typed date with nothing corroborating it.
+                x.movement_source === 'declared'
+                  ? 'date declared, not observed'
+                  : x.movement_source.startsWith('confirmed by ')
+                    ? x.movement_source
+                    : 'observed via ' + x.movement_source])}</div>`));
     });
   }
 

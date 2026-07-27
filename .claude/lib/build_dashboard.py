@@ -21,6 +21,8 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 import feed as feedmod  # noqa: E402
+import movement as movementmod  # noqa: E402
+import runs as runsmod  # noqa: E402
 import projects as projectsmod  # noqa: E402
 
 ROOT = feedmod.ROOT
@@ -73,10 +75,18 @@ def build_today(fd, want_calendar=True, today=None):
     }
 
 
-def build_needs_me(fd, project_list, hb, today=None):
+def build_needs_me(fd, project_list, hb, today=None, run_health=None):
     """Assemble NEEDS ME from every source, then apply the hard cap of 10.
 
     Order is severity-first: money and deadlines beat hygiene.
+
+    Schedule staleness is deliberately NOT here. IN FLIGHT already renders every
+    task's last-run time and turns red on a miss, and four "never run" lines were
+    taking 4 of the 10 slots and pushing real work into overflow — an item with a
+    client's money attached lost its place to a cron job that hasn't been
+    installed yet. A stale task is infrastructure; only a task that runs and
+    FAILS repeatedly is something Joel has to act on, and that is what
+    runs.health() reports.
     """
     today = today or datetime.date.today()
     items = []
@@ -110,23 +120,25 @@ def build_needs_me(fd, project_list, hb, today=None):
                           "severity": "normal", "label": "stale",
                           "age": p.last_movement})
 
-    # 5. Scheduled tasks that missed their window
-    for t in hb.get("tasks", []):
-        if not t["missed"]:
+    # 5. Scheduled tasks that run and fail. Not merely stale — see the docstring.
+    for h in (run_health or []):
+        if not h.get("needs_escalation"):
             continue
-        if t["never_run"]:
-            when = "never run"
-        elif t.get("age_hours") is None:
-            # last_run is present but unparseable. Say so — don't crash, and don't
-            # pretend the task never ran, because those are different problems.
-            when = f"last_run is unreadable ({t.get('last_run')!r})"
-        else:
-            when = f"{round(t['age_hours'])}h since last run"
-        items.append({"text": f"{t['name']} — {when}", "source": "heartbeat.json",
-                      "severity": "normal", "label": "schedule"})
+        items.append({
+            "text": f"{h['task']} — failed {h['consecutive_failures']} runs in a row",
+            "detail": f"last run {h.get('last') or 'unknown'}",
+            "source": "run-log.jsonl", "severity": "high", "label": "failing"})
 
-    rank = {"high": 0, "normal": 1}
-    items.sort(key=lambda i: rank.get(i.get("severity"), 1))
+    # A hand-written last_run that can't be parsed is a broken heartbeat, not a
+    # stale task, and it would otherwise be silently invisible.
+    for t in hb.get("tasks", []):
+        if t["missed"] and not t["never_run"] and t.get("age_hours") is None:
+            items.append({
+                "text": f"{t['name']} — heartbeat unreadable ({t.get('last_run')!r})",
+                "source": "heartbeat.json", "severity": "normal", "label": "broken"})
+
+    rank = {"security": 0, "high": 1, "normal": 2}
+    items.sort(key=lambda i: rank.get(i.get("severity"), 2))
     overflow = max(0, len(items) - NEEDS_ME_CAP)
     return {"items": items[:NEEDS_ME_CAP], "overflow": overflow}
 
@@ -139,6 +151,10 @@ def build(want_calendar=True, out=OUT, now=None):
     plist = projectsmod.load(feedmod.PROJECTS_MD)
     hb = feedmod.heartbeat(now=now)
     au = feedmod.automation_summary(now=now)
+    rh = runsmod.health()
+
+    linear_issues = (fd.get("data", {}).get("linear") or {}).get("issues", [])
+    moves = movementmod.derive_all(plist, linear_issues, today)
 
     projects_available = os.path.exists(feedmod.PROJECTS_MD)
     data = {
@@ -147,13 +163,15 @@ def build(want_calendar=True, out=OUT, now=None):
         "feed": {k: fd.get(k) for k in
                  ("present", "reason", "age_min", "stale", "unknown_age")},
         "today": build_today(fd, want_calendar, today),
-        "needs_me": build_needs_me(fd, plist, hb, today),
+        "needs_me": build_needs_me(fd, plist, hb, today, rh),
         "projects": {
             "available": projects_available,
             "reason": None if projects_available else "memory/projects.md missing",
-            "items": [p.to_dict(today) for p in plist if p.section == "Active"],
+            "items": [p.to_dict(today, moves.get(p.name))
+                      for p in plist if p.section == "Active"],
         },
-        "in_flight": {"heartbeat": hb, "automation": au},
+        "tasks_file": feedmod.tasks_file(),
+        "in_flight": {"heartbeat": hb, "automation": au, "run_health": rh},
         "loose_ends": (fd.get("data", {}).get("loose_ends")
                        or {"available": False,
                            "reason": "not collected — run /dashboard to refresh connectors",

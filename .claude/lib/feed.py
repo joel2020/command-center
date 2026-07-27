@@ -10,6 +10,7 @@ module loads that, along with how old it is.
 import datetime
 import json
 import os
+import re
 import subprocess
 import time
 
@@ -20,6 +21,9 @@ HEARTBEAT = os.path.join(ROOT, "state", "heartbeat.json")
 AUTOMATION_LOG = os.path.join(ROOT, "state", "automation-log.jsonl")
 NEEDS_ME = os.path.join(ROOT, "state", "needs-me.md")
 PROJECTS_MD = os.path.join(ROOT, "memory", "projects.md")
+# PHASES.md lists ~/TASKS.md as a Phase 1 data source. It lives outside the
+# repo because it is Joel's file, not the system's.
+TASKS_MD = os.path.expanduser("~/TASKS.md")
 
 # A connector section older than this is shown as stale rather than current.
 FEED_MAX_AGE_MIN = 90
@@ -225,6 +229,35 @@ def automation_summary(path=None, hours=24, now=None):
     recent.sort(key=lambda r: r["ts"], reverse=True)
     return {"available": True, "reason": None, "total": total, "by_tool": by_tool,
             "recent": recent[:25], "unparsed": unparsed, "window_hours": hours}
+
+
+def tasks_file(path=None):
+    """Read ~/TASKS.md, the data source PHASES.md lists and nothing ever read.
+
+    It was neither parsed nor reported as unavailable, which is the one place the
+    codebase broke its own rule that "nothing to do" and "I couldn't look" are
+    different answers. If the file doesn't exist, that is now said out loud.
+
+    Unchecked `- [ ]` items are open; `- [x]` are done and not returned.
+    """
+    path = path or TASKS_MD
+    if not os.path.exists(path):
+        return {"available": False, "reason": f"{path} does not exist", "items": []}
+    items = []
+    try:
+        with open(path) as f:
+            for line in f:
+                s = line.strip()
+                m = re.match(r"^[-*]\s*\[( |x|X)\]\s*(.+)$", s)
+                if m:
+                    if m.group(1) == " ":
+                        items.append({"text": m.group(2).strip(), "done": False})
+                    continue
+                if s.startswith("- ") and not s.startswith("- ["):
+                    items.append({"text": s[2:].strip(), "done": False})
+    except OSError as e:
+        return {"available": False, "reason": f"{path} unreadable: {e}", "items": []}
+    return {"available": True, "reason": None, "items": items}
 
 
 def needs_me_file(path=None):
