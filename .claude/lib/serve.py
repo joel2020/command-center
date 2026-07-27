@@ -70,18 +70,59 @@ def get_token(path=None):
 
 def state(now=None):
     """Everything the cockpit renders. One code path with the static build, so
-    the live view and a rebuilt index.html can never disagree."""
+    the live view and a rebuilt index.html can never disagree.
+
+    No single reader may take down the page. A launchd-started server has fewer
+    permissions than the same code run from a terminal — an unguarded listdir on
+    iCloud Drive raised PermissionError here and 500'd the whole endpoint, so
+    the cockpit read NOT LIVE while every other section was perfectly readable.
+    Each part now degrades on its own and says so, which is the same rule the
+    page itself runs on.
+    """
     now = now or datetime.datetime.now().astimezone()
-    data, _ = build_dashboard.build(want_calendar=False, out=os.devnull, now=now)
-    plist = projectsmod.load(feedmod.PROJECTS_MD)
-    snap = agentsmod.snapshot(projects=plist, now=now)
-    q = controlmod.pending_counts()
+    errors = []
+
+    try:
+        data, _ = build_dashboard.build(want_calendar=False, out=os.devnull,
+                                        now=now)
+    except Exception as e:                                   # noqa: BLE001
+        # Without the build there is no page, so this one is fatal — but it
+        # returns a shaped, honest payload rather than an HTTP 500 the front
+        # end can only render as "unreachable".
+        return {"server": {"live": True, "degraded": True,
+                           "generated_at": now.isoformat()},
+                "fatal": f"build failed: {e}",
+                "agents": {"available": False, "reason": f"build failed: {e}",
+                           "items": [], "busy": 0},
+                "projects": {"available": False, "reason": str(e), "items": []}}
+
+    try:
+        plist = projectsmod.load(feedmod.PROJECTS_MD)
+        snap = agentsmod.snapshot(projects=plist, now=now)
+    except Exception as e:                                   # noqa: BLE001
+        errors.append(f"agents: {e}")
+        snap = {"available": False, "reason": str(e), "items": [], "busy": 0}
+
+    try:
+        q = controlmod.pending_counts()
+    except Exception as e:                                   # noqa: BLE001
+        errors.append(f"inbox: {e}")
+        q = {}
+
     for a in snap.get("items", []):
         a["queued_messages"] = q.get(a["session_id"], 0)
+
+    try:
+        log = controlmod.read_log(limit=20)
+    except Exception as e:                                   # noqa: BLE001
+        errors.append(f"control log: {e}")
+        log = []
+
     data["agents"] = snap
-    data["control_log"] = controlmod.read_log(limit=20)
+    data["control_log"] = log
     data["queued_total"] = sum(q.values())
-    data["server"] = {"live": True, "generated_at": now.isoformat()}
+    data["server"] = {"live": True, "degraded": bool(errors),
+                      "errors": errors, "generated_at": now.isoformat()}
     return data
 
 

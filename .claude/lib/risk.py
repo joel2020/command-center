@@ -195,10 +195,17 @@ def last_bundle(name, dest=None):
     """
     dest = dest or os.path.expanduser(
         "~/Library/Mobile Documents/com~apple~CloudDocs/AlivioBackups")
-    if not os.path.isdir(dest):
+    # A process started by launchd has no TCC grant for ~/Library/Mobile
+    # Documents, so isdir() succeeds and listdir() raises PermissionError.
+    # Unguarded, that one call took down the whole /api/state endpoint and the
+    # cockpit showed NOT LIVE forever — while working perfectly when run from a
+    # terminal, which does have the grant. Backup age is a nice-to-have; it must
+    # never be able to break the page.
+    try:
+        mine = sorted(f for f in os.listdir(dest)
+                      if f.startswith(name + "-") and f.endswith(".bundle"))
+    except OSError:
         return None
-    mine = sorted(f for f in os.listdir(dest)
-                  if f.startswith(name + "-") and f.endswith(".bundle"))
     if not mine:
         return None
     stamp = mine[-1][len(name) + 1:-len(".bundle")]

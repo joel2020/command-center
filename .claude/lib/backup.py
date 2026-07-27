@@ -116,12 +116,25 @@ def bundle(path, dest=None, now=None):
 
 
 def prune(name, dest=None, keep=KEEP):
-    """Keep the newest `keep` bundles per repo."""
+    """Keep the newest `keep` bundles per repo.
+
+    Returns [] when the directory cannot be enumerated. macOS TCC grants a
+    launchd-started process WRITE access to iCloud Drive but denies listing it,
+    so this raised PermissionError every night — after the bundles had already
+    been written. The backup was working and the job died at cleanup, reporting
+    total failure.
+
+    Housekeeping must never be able to fail a backup. Bundles are ~200KB; a few
+    extra is nothing next to a job that looks broken and gets ignored.
+    """
     dest = dest or DEST
     if not os.path.isdir(dest):
         return []
-    mine = sorted([f for f in os.listdir(dest)
-                   if f.startswith(name + "-") and f.endswith(".bundle")])
+    try:
+        mine = sorted([f for f in os.listdir(dest)
+                       if f.startswith(name + "-") and f.endswith(".bundle")])
+    except OSError:
+        return []
     removed = []
     for f in mine[:-keep] if len(mine) > keep else []:
         try:
@@ -130,6 +143,20 @@ def prune(name, dest=None, keep=KEEP):
         except OSError:
             pass
     return removed
+
+
+def can_enumerate(dest=None):
+    """Whether this process may list the backup directory.
+
+    False under launchd on macOS. Reported rather than assumed, because
+    everything that counts bundles is unreliable when it is False.
+    """
+    dest = dest or DEST
+    try:
+        os.listdir(dest)
+        return True
+    except OSError:
+        return False
 
 
 def run(repos=None, dest=None, now=None):
@@ -144,6 +171,7 @@ def run(repos=None, dest=None, now=None):
         "results": results,
         "backed_up": sum(1 for r in results if r.get("ok")),
         "failed": [r for r in results if not r.get("ok")],
+        "can_enumerate": can_enumerate(dest),
         "still_without_remote": [r["name"] for r in results
                                  if r.get("is_repo") and not r.get("has_remote")],
     }
@@ -189,6 +217,11 @@ def main(argv=None):
                 print(f"       pruned {len(r['pruned'])} old bundle(s)")
         else:
             print(f"  SKIP {os.path.basename(r['path']):26} {r.get('reason')}")
+    if not res["can_enumerate"]:
+        print("\n  Note: this process cannot LIST the backup folder (macOS "
+              "denies that to launchd jobs), so old bundles are not pruned and "
+              "counts are unavailable. Writes and verification work — the "
+              "backups themselves are fine.")
     if res["still_without_remote"]:
         print(f"\n  Still without a git remote: "
               f"{', '.join(res['still_without_remote'])}")

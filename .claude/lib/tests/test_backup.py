@@ -135,6 +135,50 @@ class TestBundle(unittest.TestCase):
                       "a bundle that drops branches loses work")
 
 
+class TestRestrictedDirectory(unittest.TestCase):
+    """macOS TCC grants a launchd job WRITE access to iCloud Drive but denies
+    LISTING it. prune() raised PermissionError every night, after the bundles
+    were already written — so the backup worked and the job died at cleanup,
+    reporting total failure. Housekeeping must never fail a backup."""
+
+    def test_prune_returns_empty_when_listing_is_denied(self):
+        import builtins
+        with tempfile.TemporaryDirectory() as d:
+            real = os.listdir
+            def denied(p):
+                if p == d:
+                    raise PermissionError(1, "Operation not permitted")
+                return real(p)
+            os.listdir = denied
+            try:
+                self.assertEqual(backup.prune("repo", d), [],
+                                 "must not raise when the folder cannot be listed")
+            finally:
+                os.listdir = real
+
+    def test_run_completes_when_listing_is_denied(self):
+        real = os.listdir
+        with tempfile.TemporaryDirectory() as d:
+            dest = os.path.join(d, "dest")
+            p = make_repo(os.path.join(d, "repo"), commits=2)
+            def denied(path):
+                if os.path.abspath(path) == os.path.abspath(dest):
+                    raise PermissionError(1, "Operation not permitted")
+                return real(path)
+            os.listdir = denied
+            try:
+                res = backup.run([p], dest, NOW)
+                self.assertEqual(res["backed_up"], 1,
+                                 "the bundle must still be written and verified")
+                self.assertFalse(res["can_enumerate"])
+                self.assertEqual(res["failed"], [])
+            finally:
+                os.listdir = real
+
+    def test_can_enumerate_reports_rather_than_raising(self):
+        self.assertFalse(backup.can_enumerate("/nope/definitely/not/here"))
+
+
 class TestPrune(unittest.TestCase):
 
     def test_keeps_the_newest_and_removes_the_rest(self):
