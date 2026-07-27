@@ -259,9 +259,13 @@ function prov(parts){
 
   const b = r.backup || {};
   (b.at_risk || []).forEach(x => {
+    // A repo with no remote but a recent verified bundle loses a day, not
+    // everything. Saying "unbacked" when a bundle exists overstates it, and an
+    // overstated alarm is one you learn to ignore.
+    const bundled = x.last_bundle ? ` · last bundle ${x.last_bundle}` : ' · NO BUNDLE EITHER';
     const why = x.has_remote
       ? `${x.unbacked_commits} commit${x.unbacked_commits === 1 ? '' : 's'} not pushed`
-      : `no remote — ${x.unbacked_commits} commit${x.unbacked_commits === 1 ? '' : 's'} exist only on this Mac`;
+      : `no remote — ${x.unbacked_commits} commit${x.unbacked_commits === 1 ? '' : 's'} exist only on this Mac${bundled}`;
     host.appendChild($(`<div class="card bad"><div class="card-top">
       <span class="tag bad">${x.has_remote ? 'unpushed' : 'unbacked'}</span>
       <span class="card-title">${esc(x.name)}</span></div>

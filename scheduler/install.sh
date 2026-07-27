@@ -15,6 +15,7 @@
 #   email-triage     hourly
 #   evening-digest   6:00pm, daily
 #   weekly-review    5:00pm, Sunday
+#   backup           9:00pm, daily — git bundles to iCloud Drive
 
 set -euo pipefail
 
@@ -23,7 +24,7 @@ AGENTS="$HOME/Library/LaunchAgents"
 RUNNER="$CC/.claude/bin/run-scheduled.sh"
 PREFIX="com.joel.commandcenter"
 
-TASKS=(morning-brief email-triage evening-digest weekly-review)
+TASKS=(morning-brief email-triage evening-digest weekly-review backup)
 
 if [ ! -x "$RUNNER" ]; then
   echo "runner is not executable: $RUNNER"

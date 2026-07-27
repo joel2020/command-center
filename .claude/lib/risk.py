@@ -187,10 +187,33 @@ def project_paths(projects):
     return out
 
 
+def last_bundle(name, dest=None):
+    """When this repo was last bundled off-disk, or None.
+
+    A repo with no remote but a recent verified bundle is exposed differently
+    from one with neither — the first loses a day, the second loses everything.
+    """
+    dest = dest or os.path.expanduser(
+        "~/Library/Mobile Documents/com~apple~CloudDocs/AlivioBackups")
+    if not os.path.isdir(dest):
+        return None
+    mine = sorted(f for f in os.listdir(dest)
+                  if f.startswith(name + "-") and f.endswith(".bundle"))
+    if not mine:
+        return None
+    stamp = mine[-1][len(name) + 1:-len(".bundle")]
+    try:
+        return datetime.datetime.strptime(stamp, "%Y-%m-%d-%H%M").date().isoformat()
+    except ValueError:
+        return None
+
+
 def summary(issues, projects, today=None):
     """Both risks in one call, for the dashboard."""
     money = money_at_risk(issues, today)
     backup = backup_exposure(project_paths(projects))
+    for r in backup["repos"]:
+        r["last_bundle"] = last_bundle(r["name"])
     return {
         "money": money,
         "backup": backup,
