@@ -79,6 +79,26 @@ class TestBundle(unittest.TestCase):
         self.assertTrue(r["verified"])
         self.assertTrue(os.path.exists(r["bundle"]))
 
+    def test_works_from_a_cwd_that_is_not_a_repository(self):
+        """`git bundle verify` needs a repository context. Called bare it fails
+        with "need a repository", and the code DELETES a bundle that fails
+        verification — so running this from anywhere but a repo destroyed a
+        perfectly good backup and reported it as a failure.
+
+        The daily launchd job only worked because it sets WorkingDirectory.
+        """
+        p = make_repo(os.path.join(self.d.name, "repo"), commits=2)
+        here = os.getcwd()
+        outside = tempfile.mkdtemp()          # not a git repo
+        try:
+            os.chdir(outside)
+            r = backup.bundle(p, self.dest, NOW)
+            self.assertTrue(r["ok"], f"failed outside a repo: {r.get('reason')}")
+            self.assertTrue(os.path.exists(r["bundle"]),
+                            "a good bundle must not be deleted")
+        finally:
+            os.chdir(here)
+
     def test_bundle_actually_restores_to_the_same_head(self):
         """Verification is not restoration. This proves the real thing."""
         p = make_repo(os.path.join(self.d.name, "repo"), commits=3)

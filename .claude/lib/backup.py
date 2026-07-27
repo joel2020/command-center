@@ -94,7 +94,13 @@ def bundle(path, dest=None, now=None):
     # A bundle that cannot be verified is not a backup. Check it before
     # reporting success, and delete it if it is bad — a corrupt file that looks
     # like a backup is worse than no file.
-    v = subprocess.run(["git", "bundle", "verify", out],
+    #
+    # `-C path` is load-bearing: `git bundle verify` needs a repository context
+    # and fails with "need a repository to verify a bundle" without one. Called
+    # bare, this deletes a perfectly good bundle whenever the process happens to
+    # run outside a repo — which is every invocation except the launchd job that
+    # sets WorkingDirectory. Silent data loss disguised as a failed backup.
+    v = subprocess.run(["git", "-C", path, "bundle", "verify", out],
                        capture_output=True, text=True, timeout=120)
     if v.returncode != 0:
         try:
