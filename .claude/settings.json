@@ -1,10 +1,39 @@
 {
   "permissions": {
     "defaultMode": "auto",
+    "allow": [
+      "Bash(python3 .claude/lib/*)",
+      "Bash(python3 -c *)",
+      "Bash(open dashboard/index.html)",
+      "Bash(launchctl list*)",
+      "Read",
+      "Edit(state/*)",
+      "Edit(dashboard/*)",
+      "Edit(memory/*)",
+      "mcp__claude_ai_Gmail__search_threads",
+      "mcp__claude_ai_Gmail__get_thread",
+      "mcp__claude_ai_Gmail__get_message",
+      "mcp__claude_ai_Gmail__list_labels",
+      "mcp__claude_ai_Gmail__create_label",
+      "mcp__claude_ai_Gmail__label_thread",
+      "mcp__claude_ai_Gmail__label_message",
+      "mcp__claude_ai_Gmail__unlabel_thread",
+      "mcp__claude_ai_Gmail__unlabel_message",
+      "mcp__claude_ai_Linear__list_issues",
+      "mcp__claude_ai_Linear__get_issue",
+      "mcp__claude_ai_Linear__list_projects",
+      "mcp__claude_ai_Granola__list_meetings",
+      "mcp__claude_ai_Granola__get_meetings"
+    ],
     "deny": [
       "Bash(rm -rf *)",
       "Bash(sudo *)",
-      "Bash(git push --force*)"
+      "Bash(git push --force*)",
+      "mcp__claude_ai_Gmail__create_draft",
+      "mcp__claude_ai_Gmail__update_draft",
+      "mcp__claude_ai_Gmail__delete_label",
+      "mcp__whatsapp__whatsapp_send_message",
+      "mcp__whatsapp__whatsapp_send_media"
     ]
   },
   "hooks": {
