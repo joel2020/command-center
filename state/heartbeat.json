@@ -2,7 +2,7 @@
   "_comment": "Each scheduled task writes last_run here on completion. SessionStart flags anything past max_age_hours.",
   "tasks": {
     "morning-brief": {
-      "last_run": null,
+      "last_run": "2026-07-27T11:48:11.876818-04:00",
       "max_age_hours": 26
     },
     "email-triage": {

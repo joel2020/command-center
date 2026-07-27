@@ -50,10 +50,10 @@ that project.
 - repos: ~/clara
 
 ### Command Center
-- status: Phases 0–4 built, 172 tests passing. Project list approved 2026-07-26; the Phase 4 taxonomy is still gated.
-- next action: review PROPOSED_STRUCTURE.md and approve or correct the taxonomy, then install scheduler/install.sh so the four scheduled runs actually fire
+- status: Phases 0–4 built, 172 tests passing. Project list approved 2026-07-26; the Phase 4 taxonomy is still gated. The scheduler is installed and firing — it was the permission wall, not the install, that blocked it: 15 email-triage runs and one 6am morning-brief all exited 0 without stamping (FIX-PERMISSIONS.md). The settings.json allow list is now populated and the first manual morning-brief since then completed and stamped, so the fix looks live but no *scheduled* run has yet proven it.
+- next action: review PROPOSED_STRUCTURE.md and approve or correct the taxonomy; commit the working-tree settings.json fix; confirm the next scheduled email-triage stamps on its own
 - blocked by: Joel — taxonomy approval
-- last movement: 2026-07-26
+- last movement: 2026-07-27
 - repos: ~/command-center
 
 ### itslitneon
