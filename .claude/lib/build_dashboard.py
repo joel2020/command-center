@@ -21,8 +21,10 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 import feed as feedmod  # noqa: E402
+import agents as agentsmod  # noqa: E402
 import movement as movementmod  # noqa: E402
 import outcomes as outcomesmod  # noqa: E402
+import risk as riskmod  # noqa: E402
 import runs as runsmod  # noqa: E402
 import projects as projectsmod  # noqa: E402
 
@@ -185,6 +187,8 @@ def build(want_calendar=True, out=OUT, now=None, record_outcomes=False):
         },
         "tasks_file": feedmod.tasks_file(),
         "outcomes": outcomesmod.needs_me_metrics(days=7),
+        "risk": riskmod.summary(linear_issues, plist, today),
+        "agents": agentsmod.snapshot(projects=plist, now=now),
         "in_flight": {"heartbeat": hb, "automation": au, "run_health": rh},
         "loose_ends": (fd.get("data", {}).get("loose_ends")
                        or {"available": False,

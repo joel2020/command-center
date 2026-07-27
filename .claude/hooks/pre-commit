@@ -1,0 +1,39 @@
+#!/bin/bash
+# Integrity gate. Installed to .git/hooks/pre-commit by scheduler/install.sh.
+#
+# This repo now runs itself on a schedule: launchd fires /triage hourly and
+# three other commands daily. A broken commit is no longer a broken working
+# copy — it is a broken thing that executes every hour without being watched.
+# So the tests are not advisory here.
+#
+# Bypass with `git commit --no-verify` when you genuinely need to (a WIP commit
+# on a branch). The gate exists to stop accidents, not to be unskippable.
+
+set -uo pipefail
+
+CC="$(git rev-parse --show-toplevel)"
+cd "$CC" || exit 0
+
+if [ ! -f ".claude/lib/tests/run_all.py" ]; then
+  exit 0
+fi
+
+OUT=$(/usr/bin/python3 .claude/lib/tests/run_all.py 2>&1)
+STATUS=$?
+
+if [ $STATUS -ne 0 ]; then
+  echo
+  echo "  COMMIT BLOCKED — the test suite is failing."
+  echo
+  echo "$OUT" | tail -25
+  echo
+  echo "  This repo runs on a schedule. Committing a failure means shipping it"
+  echo "  to a launchd job that fires hourly with nobody watching."
+  echo
+  echo "  Fix it, or bypass deliberately with: git commit --no-verify"
+  echo
+  exit 1
+fi
+
+echo "  tests: $(echo "$OUT" | grep -oE 'Ran [0-9]+ tests' | head -1) OK"
+exit 0

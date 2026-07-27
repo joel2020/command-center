@@ -83,6 +83,11 @@
   .meter b{color:var(--ink);font-family:var(--mono)}
   .meter .g{display:block;margin-top:.15rem;font-family:var(--mono);
     font-size:.68rem;color:var(--dimmer)}
+  /* AT RISK only exists when something is wrong, so it may shout. */
+  .alarm{border-left:3px solid var(--alarm);padding-left:.6rem}
+  .alarm .sec-head{color:var(--alarm)}
+  .alarm .sec-note{color:var(--alarm)}
+
   .meter.miss{border-color:var(--alarm);color:var(--alarm)}
   .meter.miss b{color:var(--alarm)}
   .meter.miss .g{color:var(--alarm);opacity:.75}
@@ -232,6 +237,65 @@ function prov(parts){
   return `<div class="prov">${parts.filter(Boolean).map((p,i)=>
     (i?'<span class="sep">·</span>':'')+`<span>${esc(p)}</span>`).join('')}</div>`;
 }
+
+/* ── 0 · AT RISK ──
+   Renders only when there is something to say. An always-present panel reading
+   "all clear" trains you to stop looking at it, which is the one thing a risk
+   banner must never do. */
+(function atRisk(){
+  const r = D.risk || {};
+  if (!r.headline) return;
+  const host = section('at-risk', 'At risk', null, r.headline);
+  document.querySelector('#at-risk').classList.add('alarm');
+
+  const m = r.money || {};
+  (m.overdue || []).forEach(x => {
+    host.appendChild($(`<div class="card bad"><div class="card-top">
+      <span class="tag bad">${x.days}d overdue</span>
+      <span class="card-title">${esc(x.title)}</span>
+      <span class="money">$${x.amount.toLocaleString()}</span></div>
+      ${prov(['linear', x.id, x.project || ''])}</div>`));
+  });
+
+  const b = r.backup || {};
+  (b.at_risk || []).forEach(x => {
+    const why = x.has_remote
+      ? `${x.unbacked_commits} commit${x.unbacked_commits === 1 ? '' : 's'} not pushed`
+      : `no remote — ${x.unbacked_commits} commit${x.unbacked_commits === 1 ? '' : 's'} exist only on this Mac`;
+    host.appendChild($(`<div class="card bad"><div class="card-top">
+      <span class="tag bad">${x.has_remote ? 'unpushed' : 'unbacked'}</span>
+      <span class="card-title">${esc(x.name)}</span></div>
+      <div class="card-body">${esc(why)}</div>
+      ${prov([x.path, x.branch])}</div>`));
+  });
+})();
+
+/* ── 0b · AGENTS ── */
+(function agentsPanel(){
+  const a = D.agents || {};
+  const host = section('agents', 'Agents', (a.items || []).length,
+    a.available ? `${a.busy || 0} working` : '');
+  if (!a.available) { unavailable(host, a.reason || 'could not read the roster'); return; }
+  if (!a.items.length) { empty(host, 'No Claude sessions running.'); return; }
+
+  a.items.forEach(x => {
+    const la = x.last_action || {}, t = x.tasks || {};
+    // Show the real status. Claude Code reports at least busy / waiting / idle,
+    // and flattening "waiting" to "idle" hides an agent that is blocked on a
+    // permission prompt — the one state you most need to see.
+    const busy = x.status === 'busy';
+    const label = {busy: 'working', waiting: 'waiting on you', idle: 'idle'}[x.status]
+      || x.status;
+    host.appendChild($(`<div class="card ${busy ? 'sig' : x.status === 'waiting' ? 'bad' : ''}"><div class="card-top">
+      <span class="tag ${busy ? 'sig' : x.status === 'waiting' ? 'bad' : ''}">${esc(label)}</span>
+      <span class="card-title">${esc(x.name)}</span>
+      <span class="sec-note">${esc(x.project || 'unassigned')} · ${esc(x.age_human)}</span></div>
+      ${la.tool ? `<div class="card-body">${esc(la.tool)}: ${esc(la.summary || '')}</div>` : ''}
+      ${t.available ? `<div class="card-body next ${t.next ? '' : 'none'}">
+        ${t.done.length} done · ${t.pending} pending${t.next ? ' · next: ' + esc(t.next) : ''}</div>` : ''}
+      ${prov([x.cwd, x.session_id.slice(0, 8)])}</div>`));
+  });
+})();
 
 /* ── 1 · TODAY ── */
 (function today(){
