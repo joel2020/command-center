@@ -169,6 +169,45 @@
   footer{margin-top:3rem;padding-top:1rem;border-top:1px solid var(--rule);
     font-family:var(--mono);font-size:.68rem;color:var(--dim)}
 
+  /* ─── agent controls (live mode only) ────────────────────────── */
+  .ctl{display:flex;gap:.35rem;margin-top:.5rem}
+  .ctl button{
+    font-family:var(--mono);font-size:.66rem;letter-spacing:.08em;
+    text-transform:uppercase;background:transparent;color:var(--dim);
+    border:1px solid var(--rule);border-radius:2px;
+    padding:.18rem .5rem;cursor:pointer;
+  }
+  .ctl button:hover{color:var(--ink);border-color:var(--dim)}
+  .ctl button.danger:hover{color:var(--alarm);border-color:var(--alarm)}
+  .ctl button:focus-visible{outline:2px solid var(--signal);outline-offset:2px}
+
+  /* ─── live bar (only when served by serve.py) ─────────────────── */
+  .livebar{
+    position:fixed;left:0;right:0;bottom:0;z-index:20;
+    display:flex;align-items:center;gap:.6rem;
+    padding:.45rem 1rem;
+    background:rgba(11,16,22,.96);backdrop-filter:blur(8px);
+    border-top:1px solid var(--rule);
+    font-family:var(--mono);font-size:.7rem;color:var(--dim);
+  }
+  .livebar .dot{width:7px;height:7px;border-radius:50%;background:var(--ok);
+    box-shadow:0 0 0 0 rgba(79,209,165,.6);animation:pulse 2s infinite}
+  .livebar .err{color:var(--alarm);flex:1 1 auto;min-width:0;
+    overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .livebar .pause{margin-left:auto;font-family:var(--mono);font-size:.66rem;
+    background:transparent;color:var(--dim);border:1px solid var(--rule);
+    border-radius:2px;padding:.15rem .45rem;cursor:pointer}
+  .livebar .pause:hover{color:var(--ink)}
+  .livebar.down{border-top-color:var(--alarm);color:var(--alarm)}
+  .livebar.down .dot{background:var(--alarm);animation:none}
+  .livebar.paused .dot{background:var(--dim);animation:none}
+  @keyframes pulse{
+    0%{box-shadow:0 0 0 0 rgba(79,209,165,.55)}
+    70%{box-shadow:0 0 0 7px rgba(79,209,165,0)}
+    100%{box-shadow:0 0 0 0 rgba(79,209,165,0)}
+  }
+  @media (prefers-reduced-motion:reduce){ .livebar .dot{animation:none} }
+
   /* ─── entrance ───────────────────────────────────────────────── */
   section{animation:rise .38s cubic-bezier(.2,.7,.3,1) backwards}
   section:nth-of-type(1){animation-delay:.02s}
@@ -204,8 +243,13 @@ const D = JSON.parse(document.getElementById('cc-data').textContent);
 const $ = (h) => { const t = document.createElement('template'); t.innerHTML = h.trim(); return t.content.firstChild; };
 const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
+/* Section builders are collected rather than run inline, so a live repaint can
+   re-run them against fresh data without reloading the page. */
+const RENDERERS = [];
+window.__ccRender = function(){ RENDERERS.forEach(fn => { try { fn(); } catch(e){ console.error(e); } }); };
+
 /* ── header: state the freshness contract, loudly if broken ── */
-(function stamp(){
+RENDERERS.push(function stamp(){
   const f = D.feed || {};
   const bits = [`generated <b>${esc(D.generated_human)}</b>`];
   if (!f.present)        { bits.push(`connectors <b>NOT LOADED</b>`); document.body.classList.add('stale'); }
@@ -216,7 +260,7 @@ const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&a
     if (f.stale) document.body.classList.add('stale');
   }
   document.getElementById('stamp').innerHTML = bits.join(' · ');
-})();
+});
 
 /* ── generic renderers ── */
 function section(id, title, count, note){
@@ -242,7 +286,7 @@ function prov(parts){
    Renders only when there is something to say. An always-present panel reading
    "all clear" trains you to stop looking at it, which is the one thing a risk
    banner must never do. */
-(function atRisk(){
+RENDERERS.push(function atRisk(){
   const r = D.risk || {};
   if (!r.headline) return;
   const host = section('at-risk', 'At risk', null, r.headline);
@@ -272,10 +316,10 @@ function prov(parts){
       <div class="card-body">${esc(why)}</div>
       ${prov([x.path, x.branch])}</div>`));
   });
-})();
+});
 
 /* ── 0b · AGENTS ── */
-(function agentsPanel(){
+RENDERERS.push(function agentsPanel(){
   const a = D.agents || {};
   const host = section('agents', 'Agents', (a.items || []).length,
     a.available ? `${a.busy || 0} working` : '');
@@ -297,12 +341,31 @@ function prov(parts){
       ${la.tool ? `<div class="card-body">${esc(la.tool)}: ${esc(la.summary || '')}</div>` : ''}
       ${t.available ? `<div class="card-body next ${t.next ? '' : 'none'}">
         ${t.done.length} done · ${t.pending} pending${t.next ? ' · next: ' + esc(t.next) : ''}</div>` : ''}
-      ${prov([x.cwd, x.session_id.slice(0, 8)])}</div>`));
+      ${x.queued_messages ? `<div class="card-body"><span class="tag sig">${x.queued_messages} queued</span>
+        delivers when this agent goes idle</div>` : ''}
+      ${prov([x.cwd, x.session_id.slice(0, 8)])}
+      ${window.CC_LIVE ? `<div class="ctl">
+        <button data-verb="send" data-id="${esc(x.session_id)}">say…</button>
+        <button data-verb="stop" data-id="${esc(x.session_id)}" class="danger">stop</button>
+      </div>` : ''}</div>`));
   });
-})();
+
+  // Delegated, so it survives every repaint without re-binding.
+  host.onclick = (e) => {
+    const b = e.target.closest('.ctl button');
+    if (!b || !window.ccControl) return;
+    const verb = b.dataset.verb, id = b.dataset.id;
+    if (verb === 'send') {
+      const msg = prompt('Message for this agent:');
+      if (msg) window.ccControl('send', id, msg);
+    } else {
+      window.ccControl(verb, id);
+    }
+  };
+});
 
 /* ── 1 · TODAY ── */
-(function today(){
+RENDERERS.push(function today(){
   const t = D.today || {};
   const host = section('today', 'Today', null, t.date_human || '');
   let any = false;
@@ -357,10 +420,10 @@ function prov(parts){
       ? 'Nothing scheduled and nothing due. Every source answered — today is genuinely empty.'
       : 'Nothing due from the sources that answered. At least one was not read, so this is not a complete picture of today.');
   }
-})();
+});
 
 /* ── 2 · NEEDS ME (hard cap 10) ── */
-(function needsMe(){
+RENDERERS.push(function needsMe(){
   const n = D.needs_me || {};
   const host = section('needs-me', 'Needs me', (n.items||[]).length + (n.overflow||0),
     n.overflow ? `showing 10 · ${n.overflow} more held back` : '');
@@ -390,10 +453,10 @@ function prov(parts){
       ${i.detail ? `<div class="card-body">${esc(i.detail)}</div>` : ''}
       ${prov([i.source, i.age])}</div>`));
   });
-})();
+});
 
 /* ── 3 · PROJECTS (memory/projects.md is the only source) ── */
-(function projects(){
+RENDERERS.push(function projects(){
   const p = D.projects || {};
   const host = section('projects', 'Projects', (p.items||[]).length);
   const head = document.querySelector('#projects .sec-head');
@@ -464,10 +527,10 @@ function prov(parts){
     });
   });
   draw(active);
-})();
+});
 
 /* ── 4 · IN FLIGHT ── */
-(function inFlight(){
+RENDERERS.push(function inFlight(){
   const f = D.in_flight || {};
   const hb = f.heartbeat || {};
   const au = f.automation || {};
@@ -496,10 +559,10 @@ function prov(parts){
       <span class="g">${esc(r.target)}</span></div>`));
   });
   host.appendChild(log);
-})();
+});
 
 /* ── 5 · LOOSE ENDS ── */
-(function looseEnds(){
+RENDERERS.push(function looseEnds(){
   const l = D.loose_ends || {};
   const host = section('loose-ends', 'Loose ends', (l.items||[]).length);
   if (!l.available) { unavailable(host, l.reason || 'not collected'); return; }
@@ -511,12 +574,116 @@ function prov(parts){
       ${i.detail ? `<div class="card-body">${esc(i.detail)}</div>` : ''}
       ${prov([i.source, i.date])}</div>`));
   });
-})();
+});
 
 document.getElementById('main').appendChild(
   $(`<footer>Six actions are never automatic: sending · deleting · spending ·
      filing outside the taxonomy · credentials · meetings.
      Rebuild with <b>/dashboard</b>.</footer>`));
+
+window.__ccRender();
+
+/* ══ LIVE MODE ═══════════════════════════════════════════════════════════
+   Only when served by .claude/lib/serve.py, which injects CC_TOKEN and
+   CC_LIVE. Opened as a plain file this block does nothing and the page stays
+   exactly the static dashboard it was.
+
+   The whole page is re-rendered on each poll rather than diffed, because at
+   this size that costs under a millisecond and a hand-written differ is a
+   permanent source of subtle staleness. What IS preserved across a repaint is
+   scroll position and the open detail panel — losing either every two seconds
+   would make the cockpit unusable, which is the actual reason people abandon
+   auto-refreshing pages.
+   ══════════════════════════════════════════════════════════════════════ */
+(function live(){
+  if (!window.CC_LIVE || !window.CC_TOKEN) return;
+
+  const POLL_MS = 2000;
+  let failures = 0, timer = null, paused = false;
+
+  const bar = $(`<div id="livebar" class="livebar">
+    <span class="dot"></span><span class="txt">live</span>
+    <span class="err"></span>
+    <button class="pause" title="pause polling">pause</button></div>`);
+  document.body.appendChild(bar);
+  const txt = bar.querySelector('.txt'), err = bar.querySelector('.err');
+  const btn = bar.querySelector('.pause');
+  btn.onclick = () => {
+    paused = !paused;
+    btn.textContent = paused ? 'resume' : 'pause';
+    bar.classList.toggle('paused', paused);
+    if (!paused) tick();
+  };
+
+  async function api(path, opts){
+    const r = await fetch(path, Object.assign({
+      headers: {'X-CC-Token': window.CC_TOKEN, 'Content-Type': 'application/json'}
+    }, opts || {}));
+    if (!r.ok) throw new Error(`${r.status}`);
+    return r.json();
+  }
+
+  window.ccControl = async function(verb, target, message){
+    // Every control action is confirmed. This can kill a process; a
+    // mis-click must not.
+    const what = verb === 'stop' ? `Stop ${target}?\n\nSIGTERM — the transcript is kept and the session stays resumable.`
+      : verb === 'send' ? `Send to ${target}?\n\n"${message}"\n\nIf it is busy this queues and delivers when it goes idle.`
+      : `${verb} ${target}?`;
+    if (!confirm(what)) return null;
+    try {
+      const res = await api('/api/control', {method:'POST',
+        body: JSON.stringify({verb, target, message: message || ''})});
+      tick();
+      return res;
+    } catch(e){ alert('control failed: ' + e.message); return null; }
+  };
+
+  function repaint(D){
+    // Preserve what the user is doing. Losing scroll position every two
+    // seconds is the actual reason people abandon auto-refreshing pages.
+    const y = window.scrollY;
+    const pressed = [...document.querySelectorAll('.filters button[aria-pressed="true"]')]
+      .map(b => b.textContent);
+    const host = document.getElementById('main');
+    if (!host) throw new Error('#main missing — template changed shape');
+    window.D = D;
+    host.innerHTML = '';
+    document.body.classList.remove('stale');
+    window.__ccRender();
+    // Restore filter selection; the buttons are rebuilt by the render.
+    pressed.forEach(label => {
+      const b = [...document.querySelectorAll('.filters button')]
+        .find(x => x.textContent === label);
+      if (b && b.getAttribute('aria-pressed') !== 'true') b.click();
+    });
+    window.scrollTo(0, y);
+  }
+
+  async function tick(){
+    if (paused) return;
+    try {
+      const D = await api('/api/state');
+      failures = 0;
+      err.textContent = '';
+      bar.classList.remove('down');
+      txt.textContent = `live · ${new Date().toLocaleTimeString()}` +
+        (D.queued_total ? ` · ${D.queued_total} queued` : '');
+      repaint(D);
+    } catch(e){
+      failures++;
+      bar.classList.add('down');
+      // Say it is stale rather than showing old data as current — the same
+      // rule the rest of this page runs on.
+      txt.textContent = 'NOT LIVE';
+      err.textContent = `server unreachable (${failures}) — showing data from the last successful poll`;
+    } finally {
+      clearTimeout(timer);
+      // Back off when the server is down instead of hammering it.
+      timer = setTimeout(tick, failures ? Math.min(30000, POLL_MS * 2 ** failures) : POLL_MS);
+    }
+  }
+  tick();
+})();
 </script>
 </body>
 </html>

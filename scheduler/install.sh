@@ -16,6 +16,7 @@
 #   evening-digest   6:00pm, daily
 #   weekly-review    5:00pm, Sunday
 #   backup           9:00pm, daily — git bundles to iCloud Drive
+#   cockpit          always on — the live server at 127.0.0.1:7777
 
 set -euo pipefail
 
@@ -24,7 +25,7 @@ AGENTS="$HOME/Library/LaunchAgents"
 RUNNER="$CC/.claude/bin/run-scheduled.sh"
 PREFIX="com.joel.commandcenter"
 
-TASKS=(morning-brief email-triage evening-digest weekly-review backup)
+TASKS=(morning-brief email-triage evening-digest weekly-review backup cockpit)
 
 if [ ! -x "$RUNNER" ]; then
   echo "runner is not executable: $RUNNER"
