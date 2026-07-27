@@ -18,3 +18,4 @@ state/voice-cache/
 state/voice-log.jsonl
 state/control-log.jsonl
 state/agent-inbox.jsonl
+state/runs/

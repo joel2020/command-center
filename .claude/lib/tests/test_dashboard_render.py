@@ -78,9 +78,45 @@ class TestOutputIntegrity(Base):
         self.assertIn("Evil", data["projects"]["items"][0]["name"])
 
     def test_html_is_self_contained_no_external_requests(self):
+        """The page must fetch nothing. It must still be able to CONTAIN a URL.
+
+        This asserted "no http:// anywhere in the file", which was right when
+        the page held only local state. It is wrong now that the AGENTS panel
+        embeds what each session last did: an agent whose last action was
+        `Bash: open "https://github.com/..."` puts a URL in the data block as
+        inert text and turned this red at random.
+
+        A flaky test in a pre-commit gate is worse than no test — it eventually
+        blocks a legitimate commit, and people learn to pass --no-verify, which
+        disables every other check too. So this now asserts the actual intent:
+        nothing in a position the browser would FETCH.
+        """
         _, html = self.build()
-        for bad in ("http://", "https://", "//cdn", "src=\"//"):
-            self.assertNotIn(bad, html, f"external reference {bad!r} in output")
+        markup = re.sub(r'<script id="cc-data".*?</script>', "", html, flags=re.S)
+
+        fetching = [
+            (r'src\s*=\s*["\']?(?!data:)[^"\'>\s]*//', "a src= that loads off-origin"),
+            (r'<link[^>]+href\s*=\s*["\']?(?!data:)[^"\'>\s]*//', "a stylesheet link"),
+            (r'url\(\s*["\']?(?!data:)[^)"\']*//', "a CSS url() off-origin"),
+            (r'@import\s+', "a CSS @import"),
+            (r'<iframe', "an iframe"),
+        ]
+        for pattern, why in fetching:
+            m = re.search(pattern, markup, re.I)
+            self.assertIsNone(m, f"page would fetch something external: {why} "
+                                 f"-> {m.group(0) if m else ''}")
+
+    def test_embedded_data_may_contain_urls_without_fetching_them(self):
+        """Guards the fix above: a URL as DATA is fine and must stay fine."""
+        self.write("PROJECTS_MD",
+                   "## Active\n\n### Site\n- status: see https://example.com/x\n"
+                   "- last movement: 2026-07-26\n")
+        _, html = self.build()
+        data = extract_data(html)
+        self.assertIn("https://example.com/x", data["projects"]["items"][0]["status"])
+        markup = re.sub(r'<script id="cc-data".*?</script>', "", html, flags=re.S)
+        self.assertNotIn("example.com", markup,
+                         "a URL from data must never reach a fetchable position")
 
 
 class TestMissingVsEmpty(Base):
